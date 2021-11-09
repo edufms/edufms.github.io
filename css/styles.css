@@ -1,3 +1,26 @@
+
 h1 { 
-    color: red;
+    color: rgb(110, 84, 255);
+}
+
+.bg-blue{
+    background-color: #4444e8;
+}
+
+.foto_perfil{
+    border-radius: 80px;
+}
+
+.navbar-brand-text{
+    margin-left: 10px;
+    color: #afbce4
+}
+
+.active{
+    border-bottom: 1px solid;
+}
+
+.bi{
+    border: 0;
+    size: 5em;
 }
