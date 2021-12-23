@@ -1,26 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100&display=swap');
 
-h1 { 
-    color: rgb(110, 84, 255);
+* {
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
 }
 
-.bg-blue{
-    background-color: #4444e8;
+a{
+    color: #eecc99;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+body{
+    font-size: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    margin: 0;
+    background: linear-gradient(45deg,  #000d43,#023e8a) fixed;
+}
+
+h4{
+    color: #ffeecc;
+}
+.cabecalho{
+    display: flex;
+    position:fixed;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px;
+    background: linear-gradient(45deg,#023e8a,  #000d43) fixed;
+    border-bottom: 1px solid #ade8f4;
+}
+
+.teste{
+    display:block;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:white;
+    text-align:center;
+    padding: 20px 0;
 }
 
 .foto_perfil{
-    border-radius: 80px;
+    border-radius: 20px;
+    height: 72px;
+    width: 72px;
 }
 
-.navbar-brand-text{
-    margin-left: 10px;
-    color: #afbce4
+.cabecalho-navegacao{
+    display: flex;
+    gap: 30px;
+    font-family: 'Barlow Condensed', sans-serif;
 }
 
-.active{
-    border-bottom: 1px solid;
+.cabecalho-navegacao-items{
+    color: #fff;
+    style: bold;
+    text-shadow: 0 0 3px #0b0056, 0 0 5px #023e8a;
 }
 
-.bi{
-    border: 0;
-    size: 5em;
+.conteudo{
+    padding: 30px;
+    padding-top: 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12pt;
+    gap: 30px;
+}
+
+.conteudo-descricao{
+    color: #FFF;
+    text-shadow: 0 0 3px #002d3c, 0 0 5px #023e8a;
+    width: 40%;
+}
+
+
+.conteudo-descricao h1{
+    font-family: 'Comfortaa', cursive;
+}
+
+.conteudo-descricao p{
+    padding-top: 20px;
+}
+
+.conteudo-descricao ul{
+    padding-left: 20px;
+}
+
+.conteudo-imagem-linguagens{
+    height: 400px;
+    width: 400px;
+}
+
+.rodape{
+    display:flex;
+    position:fixed;
+    width:100%;
+    bottom:0vh;
+    background: linear-gradient(45deg,#023e8a,  #000d43) fixed;
+    border-top: 1px solid #ade8f4;
+    justify-content: space-around;
+    font-family: 'Barlow Condensed', sans-serif;
+    padding-left: 15px;
+    margin-right: 15px;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.rodape ul{
+    list-style: none;
+    text-align: left;
+    color: #fff;
+}
+.rodape img{
+    height: 40px;
 }
