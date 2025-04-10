@@ -1,74 +1,410 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Eduardo Machado</title>
-
-    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <title>Eduardo Machado | Analista de Dados</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .bg-tech {
+            background-color: #0f172a;
+            background-image: radial-gradient(#64748b 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+        }
+        .skill-bar {
+            height: 10px;
+            background-color: #1e40af;
+            border-radius: 5px;
+            transition: width 1.5s ease-in-out;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+    </style>
 </head>
-
-<body>
-    <header class="cabecalho">
-        <a href="#">
-            <img src="media/photo.png" alt="" class="foto_perfil" width="80" height="80">
-        </a>
-        <nav class="cabecalho-navegacao">
-            <a class="cabecalho-navegacao-items" href="#">Sobre</a>
-            <a class="cabecalho-navegacao-items" href="#">Linguagens</a>
-            <a class="cabecalho-navegacao-items" href="#">Projetos</a>
-            <a class="cabecalho-navegacao-items" href="http://pysaude.herokuapp.com" target="_blank">PySaude</a>
-            <a class="cabecalho-navegacao-items" href="#">Outros</a>
-        </nav>
+<body class="bg-tech text-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-900/80 backdrop-blur-sm py-4 sticky top-0 z-10">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Eduardo<span class="text-blue-400">.dev</span></h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#sobre" class="hover:text-blue-300 transition-colors">Sobre</a></li>
+                    <li><a href="#habilidades" class="hover:text-blue-300 transition-colors">Habilidades</a></li>
+                    <li><a href="#projetos" class="hover:text-blue-300 transition-colors">Projetos</a></li>
+                    <li><a href="#contato" class="hover:text-blue-300 transition-colors">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <main class="conteudo">
-        <section class="conteudo-descricao">
-            <h1>Portfolio Eduardo Machado</h1>
-            <p>Formado em <strong>Ciência da Computação</strong> no Centro Universitário FIEO</p>
-            <p>Cursando Pós graduação em <strong>Ciência de Dados e Big Data Analytics</strong> na Faculdade
-                Metropolitana</p>
-            <p>Estudando <strong>Python para Ciência de Dados</strong> na Data Science Academy.</p>
-            <p>Conhecimentos em: </p>
-            <ul>
-                <li>Framework Django - Básico</li>
-                <li>Pandas - Básico</li>
-                <li>Desenvolvimento Python - Intermediário</li>
-                <li>Javascript - Básico</li>
-            </ul>
-        </section>
 
-        <section class="conteudo-imagem">
-            <img src="media/linguagens.svg" class="conteudo-imagem-linguagens">
-        </section>
+    <!-- Hero Section -->
+    <section class="py-20 flex items-center min-h-screen bg-gradient-to-b from-blue-900/20 to-blue-900/5">
+        <div class="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+            <div class="order-2 md:order-1">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-white">Olá, eu sou</span>
+                    <span class="block text-blue-400 mt-2">Eduardo Machado</span>
+                </h2>
+                <h3 class="text-2xl text-blue-200 mb-6">Analista de Dados</h3>
+                <p class="text-gray-300 mb-8 text-lg">
+                    Transformando dados em insights valiosos e soluções de negócios.
+                    Especialista em SQL, Python, Power BI e visualização de dados.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#contato" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium">
+                        Entre em contato
+                    </a>
+                    <a href="#habilidades" class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-md transition-colors font-medium">
+                        Minhas habilidades
+                    </a>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 flex justify-center">
+                <div class="relative">
+                    <div class="w-64 h-64 md:w-80 md:h-80 bg-blue-600 rounded-full overflow-hidden border-4 border-blue-300 shadow-lg shadow-blue-500/30">
+                        <img src="/api/placeholder/400/400" alt="Eduardo Machado" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-blue-900/90 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
+                        <p class="font-bold">SP, Brasil</p>
+                        <p class="text-sm text-blue-200">36 anos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </main>
+    <!-- Sobre Section -->
+    <section id="sobre" class="py-20 bg-blue-900/10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Sobre Mim</span>
+                <div class="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
+            </h2>
+            <div class="bg-blue-900/30 rounded-xl p-8 backdrop-blur-sm border border-blue-800/50 shadow-xl">
+                <p class="text-lg mb-6 text-gray-200">
+                    Sou Eduardo Machado, um Analista de Dados com paixão por transformar dados brutos em insights valiosos que impulsionam decisões estratégicas. Com 36 anos de idade e baseado em São Paulo, tenho concentrado minha carreira na interseção entre tecnologia e análise de dados.
+                </p>
+                <p class="text-lg text-gray-200">
+                    Minha experiência envolve a implementação de soluções de Business Intelligence, análise exploratória de dados, modelagem estatística e desenvolvimento de dashboards interativos. Estou constantemente aprimorando minhas habilidades técnicas e acompanhando as tendências emergentes no campo da análise de dados e ciência de dados.
+                </p>
+            </div>
+        </div>
+    </section>
 
-    <footer class="rodape">
-        <section class="rodape-logo">
-            <img src="media/rodape_edufms.svg">
-        </section>
-        <section class="rodape-links">
-            <h4>Links</h4>
-            <ul>
-                <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
-                <li><a href="https://pandas.pydata.org/" target="_blank">Pandas Documentation</a></li>
-                <li><a href="https://www.javascript.com/" target="_blank">Javascript</a></li>
-                <li><a href="https://www.djangoproject.com/" target="_blank">Django Documentation</a></li>
-            </ul>
-        </section>
-        <section class="rodape-social">
-            <h4>Redes Sociais</h4>
-            <ul>
-                <li><a href="https://www.facebook.com/edufms" target="_blank">Facebook</a></li>
-                <li><a href="https://www.linkedin.com/in/eduardofmsantos" target="_blank">Linkedin</a></li>
-                <li><a href="https://www.instagram.com/edufms" target="_blank">Instagram</a></li>
-                <li><a href="https://www.github.com/edufms" target="_blank">GitHub</a></li>
-            </ul>
-        </section>
+    <!-- Habilidades Section -->
+    <section id="habilidades" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Minhas Habilidades</span>
+                <div class="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- SQL Card -->
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center mr-4">
+                            <i class="fas fa-database text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">SQL</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">Queries complexas, modelagem de dados, otimização de performance, SQL Server, MySQL, PostgreSQL.</p>
+                    <div class="w-full bg-blue-900/60 rounded-full h-2.5">
+                        <div class="skill-bar" style="width: 95%"></div>
+                    </div>
+                </div>
+                
+                <!-- Python Card -->
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center mr-4">
+                            <i class="fab fa-python text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Python</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">Pandas, NumPy, Matplotlib, Scikit-learn, automação de processos, análise exploratória.</p>
+                    <div class="w-full bg-blue-900/60 rounded-full h-2.5">
+                        <div class="skill-bar" style="width: 90%"></div>
+                    </div>
+                </div>
+                
+                <!-- Power BI Card -->
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-bar text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Power BI</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">Desenvolvimento de dashboards, DAX, ETL, modelagem dimensional, visualizações personalizadas.</p>
+                    <div class="w-full bg-blue-900/60 rounded-full h-2.5">
+                        <div class="skill-bar" style="width: 92%"></div>
+                    </div>
+                </div>
+                
+                <!-- Excel Card -->
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center mr-4">
+                            <i class="fas fa-file-excel text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Excel</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">Fórmulas avançadas, VBA, Power Query, tabelas dinâmicas, modelagem financeira.</p>
+                    <div class="w-full bg-blue-900/60 rounded-full h-2.5">
+                        <div class="skill-bar" style="width: 97%"></div>
+                    </div>
+                </div>
+                
+                <!-- Visualização de Dados Card -->
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Visualização de Dados</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">Tableau, Looker, princípios de design visual, storytelling com dados.</p>
+                    <div class="w-full bg-blue-900/60 rounded-full h-2.5">
+                        <div class="skill-bar" style="width: 88%"></div>
+                    </div>
+                </div>
+                
+                <!-- ETL Card -->
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center mr-4">
+                            <i class="fas fa-exchange-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">ETL & Data Pipeline</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">SSIS, Airflow, processos de extração e transformação, automação de fluxos de dados.</p>
+                    <div class="w-full bg-blue-900/60 rounded-full h-2.5">
+                        <div class="skill-bar" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Projetos Section -->
+    <section id="projetos" class="py-20 bg-blue-900/10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Projetos Recentes</span>
+                <div class="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Projeto 1 -->
+                <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/api/placeholder/400/240" alt="Dashboard Financeiro" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Dashboard Financeiro</h3>
+                        <p class="text-gray-300 mb-4">Desenvolvimento de dashboard interativo para análise financeira com Power BI, conectando múltiplas fontes de dados.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Power BI</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">SQL</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">DAX</span>
+                        </div>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            Ver detalhes
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 2 -->
+                <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/api/placeholder/400/240" alt="Análise Preditiva" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Modelo Preditivo de Vendas</h3>
+                        <p class="text-gray-300 mb-4">Implementação de modelo de machine learning para previsão de vendas usando séries temporais e análise de fatores externos.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Python</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Scikit-learn</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Pandas</span>
+                        </div>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            Ver detalhes
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 3 -->
+                <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/api/placeholder/400/240" alt="Data Pipeline" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">ETL Automatizado</h3>
+                        <p class="text-gray-300 mb-4">Desenvolvimento de pipeline de dados para automatizar a extração, transformação e carregamento de informações de vendas.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Python</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Airflow</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">PostgreSQL</span>
+                        </div>
+                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            Ver detalhes
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Entre em Contato</span>
+                <div class="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
+            </h2>
+            
+            <div class="bg-blue-900/30 rounded-xl p-8 backdrop-blur-sm border border-blue-800/50 shadow-xl max-w-3xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Informações de Contato</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center mr-3">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <span>eduardo.machado@email.com</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center mr-3">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <span>(11) 98765-4321</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center mr-3">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <span>São Paulo, SP</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h3 class="text-xl font-bold mb-4">Redes Sociais</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                    <i class="fab fa-medium"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">Envie uma Mensagem</h3>
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <input type="text" placeholder="Seu nome" class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="mb-4">
+                                <input type="email" placeholder="Seu e-mail" class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="mb-4">
+                                <textarea placeholder="Sua mensagem" rows="4" class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium w-full">
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900/80 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">Eduardo<span class="text-blue-400">.dev</span></h2>
+            <p class="text-gray-300 mb-6">Analista de Dados | São Paulo, SP</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-linkedin fa-lg"></i>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-github fa-lg"></i>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-twitter fa-lg"></i>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-medium fa-lg"></i>
+                </a>
+            </div>
+            <p class="text-sm text-gray-400">&copy; 2025 Eduardo Machado. Todos os direitos reservados.</p>
+        </div>
     </footer>
-</body>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animação suave para rolagem de links internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Iniciar animação das barras de habilidade
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('.skill-bar').forEach(bar => {
+                            bar.style.width = bar.style.width;
+                        });
+                    }
+                });
+            });
+            
+            observer.observe(document.querySelector('#habilidades'));
+            
+            // Manipulador de envio de formulário
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Obrigado por entrar em contato! Esta funcionalidade seria implementada com um backend real.');
+            });
+        });
+    </script>
+</body>
 </html>
