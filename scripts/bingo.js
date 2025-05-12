@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
         numerosSorteados.push(numeroSorteado);
 
         // Atualizar a interface
+        var bolinha_sorteada = `Bolinha sorteada: ${coluna} - ${numeroSorteado}`;
+        falar(bolinha_sorteada);
         resultado.textContent = `Bolinha sorteada: ${coluna} - ${numeroSorteado}`;
         bolinha.textContent = `${coluna}-${numeroSorteado}`;
         bolinha.style.display = 'inline-block';
@@ -161,3 +163,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function falar(texto) {
+    // Verifica se o navegador suporta a API de síntese de voz
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'pt-BR';
+        speechSynthesis.speak(utterance);
+    } else {
+        alert("Desculpe, seu navegador não suporta a síntese de voz.");
+    }
+}
