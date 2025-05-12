@@ -97,6 +97,10 @@ body.dark-mode .resultado {
     text-align: center;
 }
 
+body.dark-mode .historico h2 {
+    color: #e0e0e0;
+}
+
 .numeros-sorteados {
     display: flex;
     flex-wrap: wrap;
@@ -126,6 +130,10 @@ body.dark-mode .numero {
 .numero.sorteado {
     background-color: #ffc107;
     color: white;
+}
+
+body.dark-mode .numero.sorteado {
+    background-color: #ff9800;
 }
 
 .coluna {
