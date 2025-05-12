@@ -1,0 +1,254 @@
+body {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+body.dark-mode h1 {
+    color: #e0e0e0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.sorteio {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.bolinha {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff9d00, #ffc107);
+    color: white;
+    font-size: 24px;
+    line-height: 120px;
+    text-align: center;
+    margin: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.resultado {
+    font-size: 28px;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+body.dark-mode .resultado {
+    color: #e0e0e0;
+}
+
+.btn-sortear {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-sortear:hover {
+    background-color: #45a049;
+}
+
+.btn-sortear:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.historico {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.historico h2 {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.numeros-sorteados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .numero {
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    color: #e0e0e0;
+}
+
+.numero.sorteado {
+    background-color: #ffc107;
+    color: white;
+}
+
+.coluna {
+    margin: 10px;
+    width: 100%;
+}
+
+.coluna-titulo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+body.dark-mode .coluna-titulo {
+    color: #e0e0e0;
+}
+
+.tabela-bingo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.reiniciar {
+    margin-top: 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reiniciar:hover {
+    background-color: #d32f2f;
+}
+
+.contador {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #555;
+    transition: color 0.3s;
+}
+
+body.dark-mode .contador {
+    color: #aaa;
+}
+
+.ultimos-sorteados {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #555;
+    transition: color 0.3s;
+}
+
+body.dark-mode .ultimos-sorteados {
+    color: #aaa;
+}
+
+.ultimos-numeros {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.ultimo-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffc107;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #ffc107;
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    .bolinha {
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 18px;
+    }
+
+    .resultado {
+        font-size: 22px;
+    }
+
+    .btn-sortear {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+}

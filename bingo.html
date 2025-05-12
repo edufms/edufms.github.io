@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio de Bingo</title>
+    <link rel="stylesheet" href="/edufms.github.io/css/bingo.css">
+    <script src="/edufms.github.io/scripts/bingo.js" defer></script>
+</head>
+
+<body>
+    <button id="darkModeToggle" class="dark-mode-toggle" title="Alternar modo noturno">☀️</button>
+    <div class="container">
+        <h1>Sorteio de Bingo</h1>
+
+        <div class="sorteio">
+            <button id="btnSortear" class="btn-sortear">Sortear Número</button>
+            <div id="resultado" class="resultado">Clique no botão para sortear</div>
+            <div id="bolinha" class="bolinha" style="display:none;"></div>
+        </div>
+
+        <div class="contador">
+            <span id="numeroSorteados">0</span> números sorteados de 75
+        </div>
+
+        <div class="ultimos-sorteados">
+            <div>Últimos números sorteados:</div>
+            <div class="ultimos-numeros" id="ultimosSorteados">
+                <div class="ultimo-numero" style="visibility: hidden;">-</div>
+                <div class="ultimo-numero" style="visibility: hidden;">-</div>
+                <div class="ultimo-numero" style="visibility: hidden;">-</div>
+            </div>
+        </div>
+
+        <div class="historico">
+            <h2>Cartela de Bingo</h2>
+            <div class="tabela-bingo">
+                <div class="coluna">
+                    <div class="coluna-titulo">B</div>
+                    <div class="numeros-sorteados" id="coluna-b"></div>
+                </div>
+                <div class="coluna">
+                    <div class="coluna-titulo">I</div>
+                    <div class="numeros-sorteados" id="coluna-i"></div>
+                </div>
+                <div class="coluna">
+                    <div class="coluna-titulo">N</div>
+                    <div class="numeros-sorteados" id="coluna-n"></div>
+                </div>
+                <div class="coluna">
+                    <div class="coluna-titulo">G</div>
+                    <div class="numeros-sorteados" id="coluna-g"></div>
+                </div>
+                <div class="coluna">
+                    <div class="coluna-titulo">O</div>
+                    <div class="numeros-sorteados" id="coluna-o"></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="btnReiniciar" class="reiniciar">Reiniciar Jogo</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
