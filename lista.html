@@ -1,120 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Listas de Compras</title>
-    <style>
-        :root {
-            /* Cores do tema claro */
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --container-bg: rgba(255, 255, 255, 0.95);
-            --header-bg: linear-gradient(135deg, #4CAF50, #45a049);
-            --card-bg: #f8f9fa;
-            --card-border: #e9ecef;
-            --text-primary: #333;
-            --text-secondary: #666;
-            --border-color: #ddd;
-            --hover-bg: #f8f9fa;
-            --completed-bg: #e8f5e8;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(76, 175, 80, 0.3);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciador de Listas de Compras</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --container-bg: rgba(255, 255, 255, 0.95);
+      --header-bg: linear-gradient(135deg, #4CAF50, #45a049);
+      --card-bg: #f8f9fa;
+      --card-border: #e9ecef;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --border-color: #ddd;
+      --hover-bg: #f8f9fa;
+      --completed-bg: #e8f5e8;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow-hover: rgba(76, 175, 80, 0.3);
+    }
+	
+	.item input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		margin-right: 15px;
+		cursor: pointer;
+		transform: scale(1.2);
+	}
 
-        [data-theme="dark"] {
-            /* Cores do tema escuro */
-            --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            --container-bg: rgba(45, 55, 70, 0.95);
-            --header-bg: linear-gradient(135deg, #27ae60, #229954);
-            --card-bg: #34495e;
-            --card-border: #4a5568;
-            --text-primary: #e2e8f0;
-            --text-secondary: #a0aec0;
-            --border-color: #4a5568;
-            --hover-bg: #3a4a5c;
-            --completed-bg: #2d4a2d;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --shadow-hover: rgba(39, 174, 96, 0.3);
-        }
+    [data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      --container-bg: rgba(45, 55, 70, 0.95);
+      --header-bg: linear-gradient(135deg, #27ae60, #229954);
+      --card-bg: #34495e;
+      --card-border: #4a5568;
+      --text-primary: #e2e8f0;
+      --text-secondary: #a0aec0;
+      --border-color: #4a5568;
+      --hover-bg: #3a4a5c;
+      --completed-bg: #2d4a2d;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --shadow-hover: rgba(39, 174, 96, 0.3);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--text-primary);
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            padding: 20px;
-            transition: all 0.3s ease;
-            color: var(--text-primary);
-        }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--container-bg);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px var(--shadow);
+      overflow: hidden;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--container-bg);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px var(--shadow);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+    .header {
+      background: var(--header-bg);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
 
-        .header {
-            background: var(--header-bg);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
 
-        .header p {
-            opacity: 0.9;
-            font-size: 1.1em;
-        }
+    .content { padding: 30px; }
 
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2em;
-            transition: all 0.3s ease;
-        }
+    .list-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
+    select, input, button {
+      padding: 10px 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 14px;
+      background: var(--container-bg);
+      color: var(--text-primary);
+    }
 
-        .content {
-            padding: 30px;
-        }
+    button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-        .top-section {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+    .btn-danger { background: linear-gradient(135deg, #f44336, #d32f2f); }
+    .btn-secondary { background: linear-gradient(135deg, #FF9800, #F57C00); }
+    .btn-info { background: linear-gradient(135deg, #2196F3, #1976D2); }
 
-        .list-selector {
-            flex: 2;
-        }
+    .item-form {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 2px solid var(--card-border);
+    }
 
-        .recent-lists {
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 10px;
+    }
+
+    .current-list {
+      background: var(--container-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px var(--shadow);
+    }
+
+    .list-header {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-display {
+      background: rgba(255,255,255,0.2);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 5px;
+      font-size: 0.9em;
+    }
+
+    .items-container { padding: 20px; }
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .item-info {
+      flex: 1;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .item-price, .item-qty, .item-total {
+      cursor: pointer;
+    }
+	
+	        .recent-lists {
             flex: 1;
             background: var(--card-bg);
             border: 2px solid var(--card-border);
@@ -157,466 +217,119 @@
             background: rgba(76, 175, 80, 0.1);
         }
 
-        .list-controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        select, input, button {
-            padding: 12px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: var(--container-bg);
-            color: var(--text-primary);
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-
-        button {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-hover);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #f44336, #d32f2f);
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #FF9800, #F57C00);
-        }
-
-        .btn-secondary:hover {
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, #2196F3, #1976D2);
-        }
-
-        .btn-info:hover {
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
-        }
-
-        .item-form {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 2px solid var(--card-border);
-            transition: all 0.3s ease;
-        }
-
-        .item-form h3 {
-            margin-bottom: 20px;
-            color: var(--text-primary);
-            font-size: 1.3em;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr auto;
-            gap: 15px;
-            align-items: end;
-        }
-
-        .current-list {
-            background: var(--container-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .list-header {
-            background: linear-gradient(135deg, #2196F3, #1976D2);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .list-title {
-            font-size: 1.5em;
-            font-weight: 600;
-        }
-
-        .total-display {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-
-        .items-container {
-            padding: 20px;
-        }
-
-        .item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .item:last-child {
-            border-bottom: none;
-        }
-
-        .item:hover {
-            background: var(--hover-bg);
-        }
-
-        .item.completed {
-            opacity: 0.6;
-            text-decoration: line-through;
-            background: var(--completed-bg);
-        }
-
-        .item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            cursor: pointer;
-            transform: scale(1.2);
-        }
-
-        .item-info {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .item-name {
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .item-price {
-            font-weight: bold;
-            color: #4CAF50;
-            font-size: 1.1em;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-        .item-price:hover {
-            background: rgba(76, 175, 80, 0.1);
-        }
-
-        .item.completed .item-price {
-            color: var(--text-secondary);
-        }
-
-        .item-price.editing {
-            background: rgba(255, 152, 0, 0.2);
-            border: 2px solid #FF9800;
-        }
-
-        .price-input {
-            width: 80px;
-            padding: 2px 6px;
-            border: 1px solid var(--border-color);
-            border-radius: 3px;
-            font-size: 1em;
-            font-weight: bold;
-            color: #4CAF50;
-            background: var(--container-bg);
-        }
-
-        .item-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .action-btn {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .empty-list {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-secondary);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background-color: var(--container-bg);
-            margin: 15% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            color: var(--text-primary);
-        }
-
-        .modal h3 {
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        .modal input {
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .close {
-            color: var(--text-secondary);
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .header {
-                padding: 20px;
-            }
-
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .top-section {
-                flex-direction: column;
-            }
-
-            .list-controls {
-                flex-direction: column;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .list-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .item-info {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-
-            .item-actions {
-                margin-left: auto;
-            }
-
-            .theme-toggle {
-                top: 10px;
-                right: 10px;
-                padding: 8px;
-                font-size: 1em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            select, input, button {
-                padding: 10px 12px;
-                font-size: 14px;
-            }
-        }
-    </style>
+    .item.completed { text-decoration: line-through; opacity: 0.6; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">Lista</button>
-            <h1>Lista de Compras</h1>
-            <p>Organize suas compras de forma inteligente</p>
-        </div>
-
-        <div class="content">
-            <div class="top-section">
-                <div class="list-selector">
-                    <div class="list-controls">
-                        <select id="listSelect">
-                            <option value="">Selecionar Lista</option>
-                        </select>
-                        <input type="text" id="newListName" placeholder="Nome da nova lista">
-                        <button onclick="createList()">Criar Lista</button>
-                        <button onclick="showDeleteConfirm()" class="btn-danger">Excluir Lista</button>
-                        <button onclick="exportLists()" class="btn-info">Exportar JSON</button>
-                        <input type="file" id="importFile" style="display:none" accept="application/json" onchange="importLists(event)">
-                        <button onclick="document.getElementById('importFile').click()" class="btn-secondary">Importar JSON</button>
-
-                    </div>
-                </div>
-
-                <div class="recent-lists">
-                    <h3>Listas Recentes</h3>
-                    <div id="recentListsContainer">
-                        <div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 20px;">
-                            Nenhuma lista criada ainda
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="itemFormContainer" style="display: none;">
-                <div class="item-form">
-                    <h3>Adicionar Item</h3>
-                    <div class="form-row">
-                        <input type="text" id="itemName" placeholder="Nome do item">
-                        <input type="number" id="itemPrice" placeholder="Pre莽o (R$)" step="0.01" min="0">
-                        <button onclick="addItem()">Adicionar</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="currentListContainer" style="display: none;">
-                <div class="current-list">
-					<div class="list-header">
-						<div class="list-title" id="currentListTitle">Minha Lista</div>
-						<div>
-							<div class="total-display">
-								Total (concluídos): R$ <span id="totalAmount">0,00</span>
-							</div>
-							<div class="total-display" style="margin-top:5px; background: rgba(255,255,255,0.15);">
-								Valor Previsto: R$ <span id="valorPrevisto">0,00</span>
-							</div>
-						</div>
-					</div>
-                    <div class="items-container" id="itemsContainer">
-                        <div class="empty-list">
-                            <div style="font-size: 3em; margin-bottom: 20px;">馃摑</div>
-                            <h3>Lista vazia</h3>
-                            <p>Adicione alguns itens para come莽ar!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+      <h1>🛒 Lista de Compras</h1>
     </div>
 
-    <!-- Modal de Confirma莽茫o de Exclus茫o -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDeleteModal()">&times;</span>
-            <h3>鈿狅笍 Confirmar Exclus茫o</h3>
-            <p id="deleteMessage">Tem certeza que deseja excluir esta lista?</p>
-            <div class="modal-buttons">
-                <button onclick="closeDeleteModal()">Cancelar</button>
-                <button onclick="confirmDelete()" class="btn-danger">Excluir</button>
-            </div>
+    <div class="content">
+      <div class="list-controls">
+        <select id="listSelect"><option value="">Selecionar Lista</option></select>
+        <input type="text" id="newListName" placeholder="Nome da nova lista">
+        <button onclick="createList()">Criar Lista</button>
+        <button onclick="showDeleteConfirm()" class="btn-danger">Excluir Lista</button>
+        <button onclick="exportLists()" class="btn-info">Exportar JSON</button>
+        <input type="file" id="importFile" style="display:none" accept="application/json" onchange="importLists(event)">
+        <button onclick="document.getElementById('importFile').click()" class="btn-secondary">Importar JSON</button>
+      </div>
+	<div class="recent-lists">
+		<h3>Listas Recentes</h3>
+		<div id="recentListsContainer">
+			<div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 20px;">
+				Nenhuma lista criada ainda
+			</div>
+		</div>
+	</div>
+
+      <div id="itemFormContainer" style="display: none;">
+        <div class="item-form">
+          <h3>Adicionar Item</h3>
+          <div class="form-row">
+            <input type="text" id="itemName" placeholder="Nome do item">
+            <input type="number" id="itemPrice" placeholder="Preço (R$)" step="0.01" min="0">
+            <input type="number" id="itemQty" placeholder="Qtd" min="1" value="1">
+            <button onclick="addItem()">Adicionar</button>
+          </div>
         </div>
+      </div>
+
+      <div id="currentListContainer" style="display: none;">
+        <div class="current-list">
+          <div class="list-header">
+            <div class="list-title" id="currentListTitle">Minha Lista</div>
+            <div>
+              <div class="total-display">Total (concluídos): R$ <span id="totalAmount">0,00</span></div>
+              <div class="total-display">Valor Previsto: R$ <span id="valorPrevisto">0,00</span></div>
+            </div>
+          </div>
+          <div class="items-container" id="itemsContainer"></div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        let lists = JSON.parse(localStorage.getItem('shoppingLists') || '{}');
-        let currentListId = null;
-        let editingItemId = null;
+  <script>
+    let lists = JSON.parse(localStorage.getItem('shoppingLists') || '{}');
+    let currentListId = null;
+    let editingItemId = null;
 
-        // Carregar tema salvo
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeToggle();
+    function saveLists() {
+      localStorage.setItem('shoppingLists', JSON.stringify(lists));
+	  loadRecentLists();
+    }
 
-        function saveLists() {
-            localStorage.setItem('shoppingLists', JSON.stringify(lists));
-            loadRecentLists(); // Atualizar lista de recentes sempre que salvar
+    function exportLists() {
+      const dataStr = JSON.stringify(lists, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "listas_de_compras.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importLists(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const importedData = JSON.parse(e.target.result);
+          if (typeof importedData === "object" && importedData !== null) {
+            lists = { ...lists, ...importedData };
+            saveLists();
+            loadListSelector();
+            selectList(currentListId);
+            alert("Listas importadas com sucesso!");
+          } else {
+            alert("Arquivo inválido!");
+          }
+        } catch (err) {
+          alert("Erro ao importar JSON: " + err.message);
         }
+      };
+      reader.readAsText(file);
+    }
 
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeToggle();
-        }
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeToggle();
+    }
 
-        function updateThemeToggle() {
-            const themeToggle = document.getElementById('themeToggle');
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            themeToggle.textContent = currentTheme === 'dark' ? '鈽�锔�' : '馃寵';
-            themeToggle.title = currentTheme === 'dark' ? 'Modo Claro' : 'Modo Escuro';
-        }
+    function updateThemeToggle() {
+      const themeToggle = document.getElementById('themeToggle');
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    }
 
         function loadRecentLists() {
             const container = document.getElementById('recentListsContainer');
@@ -646,349 +359,180 @@
             `).join('');
         }
 
-        function formatDate(dateString) {
-            if (!dateString) return 'Data desconhecida';
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffTime = Math.abs(now - date);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diffDays === 1) return 'Hoje';
-            if (diffDays === 2) return 'Ontem';
-            if (diffDays <= 7) return `${diffDays - 1} dias atras`;
-            return date.toLocaleDateString('pt-BR');
-        }
+    function loadListSelector() {
+      const select = document.getElementById('listSelect');
+      select.innerHTML = '<option value="">Selecionar Lista</option>';
+      Object.keys(lists).forEach(listId => {
+        const option = document.createElement('option');
+        option.value = listId;
+        option.textContent = lists[listId].name;
+        select.appendChild(option);
+      });
+      if (currentListId && lists[currentListId]) {
+        select.value = currentListId;
+      }
+    }
 
-        function loadListSelector() {
-            const select = document.getElementById('listSelect');
-            select.innerHTML = '<option value="">Selecionar Lista</option>';
-            
-            Object.keys(lists).forEach(listId => {
-                const option = document.createElement('option');
-                option.value = listId;
-                option.textContent = lists[listId].name;
-                select.appendChild(option);
-            });
+    function createList() {
+      const nameInput = document.getElementById('newListName');
+      const name = nameInput.value.trim();
+      if (!name) return alert('Digite um nome');
+      const listId = 'list_' + Date.now();
+      lists[listId] = { name, items: [], created: new Date().toISOString() };
+      saveLists();
+      loadListSelector();
+      selectList(listId);
+      nameInput.value = '';
+    }
 
-            if (currentListId && lists[currentListId]) {
-                select.value = currentListId;
-            }
-        }
+    function selectList(listId) {
+      currentListId = listId;
+      if (listId && lists[listId]) {
+        document.getElementById('itemFormContainer').style.display = 'block';
+        document.getElementById('currentListContainer').style.display = 'block';
+        document.getElementById('currentListTitle').textContent = lists[listId].name;
+        loadItems();
+      } else {
+        document.getElementById('itemFormContainer').style.display = 'none';
+        document.getElementById('currentListContainer').style.display = 'none';
+      }
+    }
 
-        function createList() {
-            const nameInput = document.getElementById('newListName');
-            const name = nameInput.value.trim();
-            
-            if (!name) {
-                alert('Por favor, digite um nome para a lista');
-                return;
-            }
+    function addItem() {
+      if (!currentListId) return;
+      const name = document.getElementById('itemName').value.trim();
+      const price = parseFloat(document.getElementById('itemPrice').value) || 0;
+      const qty = parseInt(document.getElementById('itemQty').value) || 1;
+      if (!name) return alert('Digite o nome do item');
+      const item = { id: 'item_' + Date.now(), name, price, quantity: qty, completed: false };
+      lists[currentListId].items.push(item);
+      saveLists();
+      loadItems();
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemPrice').value = '';
+      document.getElementById('itemQty').value = 1;
+    }
 
-            const listId = 'list_' + Date.now();
-            
-            lists[listId] = {
-                name: name,
-                items: [],
-                created: new Date().toISOString()
-            };
+    function loadItems() {
+      const container = document.getElementById('itemsContainer');
+      const items = lists[currentListId].items;
+      if (items.length === 0) {
+        container.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:20px;">Lista vazia</div>`;
+      } else {
+        container.innerHTML = items.map(item => `
+          <div class="item ${item.completed ? 'completed' : ''}">
+            <input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleItem('${item.id}')">
+            <div class="item-info">
+              <span class="item-name">${item.name}</span>
+              <span class="item-price" onclick="startEdit('${item.id}','price')">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+              <span class="item-qty" onclick="startEdit('${item.id}','quantity')">Qtd: ${item.quantity}</span>
+              <span class="item-total">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
+            </div>
+            <div class="item-actions">
+              <button class="action-btn" onclick="confirmDeleteItem('${item.id}')">🗑️</button>
+            </div>
+          </div>
+        `).join('');
+      }
+      updateTotal();
+    }
 
-            saveLists();
-            loadListSelector();
-            selectList(listId);
-            nameInput.value = '';
-        }
+    function toggleItem(itemId) {
+      const item = lists[currentListId].items.find(i => i.id === itemId);
+      if (item) { item.completed = !item.completed; saveLists(); loadItems(); }
+    }
 
-        function selectList(listId) {
-            // Cancelar qualquer edicao em andamento
-            if (editingItemId) {
-                cancelEdit();
-            }
-            
-            currentListId = listId;
-            document.getElementById('listSelect').value = listId;
-            
-            if (listId && lists[listId]) {
-                document.getElementById('itemFormContainer').style.display = 'block';
-                document.getElementById('currentListContainer').style.display = 'block';
-                document.getElementById('currentListTitle').textContent = lists[listId].name;
-                loadItems();
-                loadRecentLists(); // Atualizar para destacar a lista ativa
-            } else {
-                document.getElementById('itemFormContainer').style.display = 'none';
-                document.getElementById('currentListContainer').style.display = 'none';
-                currentListId = null;
-                loadRecentLists();
-            }
-        }
+    function startEdit(itemId, field) {
+      if (editingItemId && editingItemId !== itemId) cancelEdit();
+      const item = lists[currentListId].items.find(i => i.id === itemId);
+      if (!item) return;
+      editingItemId = itemId;
+      let selector = field === "price" ? ".item-price" : ".item-qty";
+      const elements = document.querySelectorAll(selector);
+      const element = Array.from(elements).find(el => el.onclick.toString().includes(itemId));
+      if (element) {
+        const currentValue = field === "price" ? item.price.toFixed(2) : item.quantity;
+        element.innerHTML = `<input type="number" class="price-input" value="${currentValue}" step="${field === "price" ? "0.01" : "1"}" min="0" id="editInput_${itemId}_${field}" onkeypress="handleEditKeypress(event,'${itemId}','${field}')" onblur="saveEdit('${itemId}','${field}')">`;
+        const input = document.getElementById(`editInput_${itemId}_${field}`);
+        input.focus(); input.select();
+      }
+    }
 
-        function showDeleteConfirm() {
-            if (!currentListId || !lists[currentListId]) {
-                alert('Nenhuma lista selecionada');
-                return;
-            }
+    function handleEditKeypress(event,itemId,field){ if(event.key==='Enter'){ saveEdit(itemId,field);} else if(event.key==='Escape'){ cancelEdit();}}
 
-            document.getElementById('deleteMessage').textContent = 
-                `Tem certeza que deseja excluir a lista "${lists[currentListId].name}"? Esta acao nao pode ser desfeita.`;
-            document.getElementById('deleteModal').style.display = 'block';
-        }
+    function saveEdit(itemId, field) {
+      const input = document.getElementById(`editInput_${itemId}_${field}`);
+      if (!input) return;
+      const newValue = field === "price" ? parseFloat(input.value) || 0 : parseInt(input.value) || 1;
+      const item = lists[currentListId].items.find(i => i.id === itemId);
+      if (item) { if (field==="price") item.price=newValue; if (field==="quantity") item.quantity=newValue; saveLists(); }
+      editingItemId=null; loadItems();
+    }
 
-        function closeDeleteModal() {
-            document.getElementById('deleteModal').style.display = 'none';
-        }
+    function cancelEdit(){ editingItemId=null; loadItems(); }
 
-        function confirmDelete() {
-            if (currentListId && lists[currentListId]) {
-                delete lists[currentListId];
-                saveLists();
-                loadListSelector();
-                selectList('');
-            }
-            closeDeleteModal();
-        }
+    function confirmDeleteItem(itemId) {
+      const item = lists[currentListId].items.find(i => i.id === itemId);
+      if (item && confirm(`Excluir "${item.name}"?`)) {
+        lists[currentListId].items = lists[currentListId].items.filter(i => i.id !== itemId);
+        saveLists(); loadItems();
+      }
+    }
 
-        function addItem() {
-            if (!currentListId) {
-                alert('Selecione uma lista primeiro');
-                return;
-            }
+    function updateTotal() {
+      const items = lists[currentListId].items;
+      const total = items.filter(i => i.completed).reduce((sum,i)=>sum+(i.price*i.quantity),0);
+      document.getElementById('totalAmount').textContent = total.toFixed(2).replace('.', ',');
+      const previsto = items.reduce((sum,i)=>sum+(i.price*i.quantity),0);
+      document.getElementById('valorPrevisto').textContent = previsto.toFixed(2).replace('.', ',');
+    }
 
-            const nameInput = document.getElementById('itemName');
-            const priceInput = document.getElementById('itemPrice');
-            
-            const name = nameInput.value.trim();
-            const price = parseFloat(priceInput.value) || 0;
+	function loadRecentLists() {
+  const container = document.getElementById('recentListsContainer');
 
-            if (!name) {
-                alert('Por favor, digite o nome do item');
-                return;
-            }
+  const sortedLists = Object.entries(lists)
+    .sort((a, b) => new Date(b[1].created || 0) - new Date(a[1].created || 0))
+    .slice(0, 3);
 
-            const item = {
-                id: 'item_' + Date.now(),
-                name: name,
-                price: price,
-                completed: false
-            };
+  if (sortedLists.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 20px;">
+        Nenhuma lista criada ainda
+      </div>
+    `;
+    return;
+  }
 
-            lists[currentListId].items.push(item);
-            saveLists();
-            loadItems();
-            
-            nameInput.value = '';
-            priceInput.value = '';
-            nameInput.focus();
-        }
+  container.innerHTML = sortedLists.map(([listId, list]) => `
+    <div class="recent-item ${currentListId === listId ? 'active' : ''}" 
+         onclick="selectList('${listId}')" title="Clique para abrir esta lista">
+      <div style="font-weight: 500; margin-bottom: 2px;">${list.name}</div>
+      <div style="font-size: 0.8em; color: var(--text-secondary);">
+        ${list.items.length} itens • ${formatDate(list.created)}
+      </div>
+    </div>
+  `).join('');
+}
 
-        function loadItems() {
-            if (!currentListId || !lists[currentListId]) return;
+function formatDate(dateString) {
+  if (!dateString) return 'Data desconhecida';
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now - date);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            const container = document.getElementById('itemsContainer');
-            const items = lists[currentListId].items;
-
-            if (items.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-list">
-                        <div style="font-size: 3em; margin-bottom: 20px;">--</div>
-                        <h3>Lista vazia</h3>
-                        <p>Adicione alguns itens para comecar!</p>
-                    </div>
-                `;
-            } else {
-                container.innerHTML = items.map(item => `
-                    <div class="item ${item.completed ? 'completed' : ''}">
-                        <input type="checkbox" 
-                               ${item.completed ? 'checked' : ''} 
-                               onchange="toggleItem('${item.id}')">
-                        <div class="item-info">
-                            <span class="item-name">${item.name}</span>
-                            <span class="item-price" onclick="startEdit('${item.id}')" 
-                                  title="Clique para editar o preco">
-                                R$ ${item.price.toFixed(2).replace('.', ',')}
-                            </span>
-                        </div>
-                        <div class="item-actions">
-                            <button class="action-btn" onclick="confirmDeleteItem('${item.id}')" 
-                                    title="Excluir item">Excluir</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            updateTotal();
-        }
-
-        function toggleItem(itemId) {
-            if (!currentListId || !lists[currentListId]) return;
-
-            const item = lists[currentListId].items.find(i => i.id === itemId);
-            if (item) {
-                item.completed = !item.completed;
-                saveLists();
-                loadItems();
-            }
-        }
-
-        function startEdit(itemId) {
-            // Cancelar edicao anterior se existir
-            if (editingItemId && editingItemId !== itemId) {
-                cancelEdit();
-            }
-
-            const item = lists[currentListId].items.find(i => i.id === itemId);
-            if (!item) return;
-
-            editingItemId = itemId;
-            
-            // Encontrar o elemento do preco
-            const priceElements = document.querySelectorAll('.item-price');
-            const priceElement = Array.from(priceElements).find(el => {
-                return el.onclick.toString().includes(itemId);
-            });
-
-            if (priceElement) {
-                const currentPrice = item.price.toFixed(2);
-                priceElement.classList.add('editing');
-                priceElement.innerHTML = `
-                    <input type="number" class="price-input" value="${currentPrice}" 
-                           step="0.01" min="0" id="editInput_${itemId}"
-                           onkeypress="handleEditKeypress(event, '${itemId}')"
-                           onblur="saveEdit('${itemId}')">
-                `;
-                
-                const input = document.getElementById(`editInput_${itemId}`);
-                input.focus();
-                input.select();
-            }
-        }
-
-        function handleEditKeypress(event, itemId) {
-            if (event.key === 'Enter') {
-                saveEdit(itemId);
-            } else if (event.key === 'Escape') {
-                cancelEdit();
-            }
-        }
-
-        function saveEdit(itemId) {
-            if (editingItemId !== itemId) return;
-
-            const input = document.getElementById(`editInput_${itemId}`);
-            if (!input) return;
-
-            const newPrice = parseFloat(input.value) || 0;
-            const item = lists[currentListId].items.find(i => i.id === itemId);
-            
-            if (item) {
-                item.price = newPrice;
-                saveLists();
-            }
-
-            editingItemId = null;
-            loadItems();
-        }
-
-        function cancelEdit() {
-            editingItemId = null;
-            loadItems();
-        }
-
-        function confirmDeleteItem(itemId) {
-            if (!currentListId || !lists[currentListId]) return;
-
-            const item = lists[currentListId].items.find(i => i.id === itemId);
-            if (item && confirm(`Tem certeza que deseja excluir "${item.name}"?`)) {
-                lists[currentListId].items = lists[currentListId].items.filter(i => i.id !== itemId);
-                saveLists();
-                loadItems();
-            }
-        }
-
-		function updateTotal() {
-			if (!currentListId || !lists[currentListId]) return;
-
-			const items = lists[currentListId].items;
-
-			// Total concluído (já existe)
-			const total = items
-				.filter(item => item.completed)
-				.reduce((sum, item) => sum + item.price, 0);
-
-			document.getElementById('totalAmount').textContent = total.toFixed(2).replace('.', ',');
-
-			// Valor previsto (todos os itens)
-			const previsto = items.reduce((sum, item) => sum + item.price, 0);
-			document.getElementById('valorPrevisto').textContent = previsto.toFixed(2).replace('.', ',');
-		}
+  if (diffDays === 1) return 'Hoje';
+  if (diffDays === 2) return 'Ontem';
+  if (diffDays <= 7) return `${diffDays - 1} dias atrás`;
+  return date.toLocaleDateString('pt-BR');
+}
 
 
-        // Event listeners
-        document.getElementById('listSelect').addEventListener('change', function() {
-            selectList(this.value);
-        });
-
-        document.getElementById('itemName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('itemPrice').focus();
-            }
-        });
-
-        document.getElementById('itemPrice').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addItem();
-            }
-        });
-
-        // Fechar modais quando clicar fora
-        window.addEventListener('click', function(event) {
-            const deleteModal = document.getElementById('deleteModal');
-            
-            if (event.target === deleteModal) {
-                closeDeleteModal();
-            }
-        });
-
-        function exportLists() {
-            const dataStr = JSON.stringify(lists, null, 2);
-            const blob = new Blob([dataStr], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "listas_de_compras.json";
-            a.click();
-
-            URL.revokeObjectURL(url);
-        }
-
-        function importLists(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const importedData = JSON.parse(e.target.result);
-                    if (typeof importedData === "object" && importedData !== null) {
-                        lists = { ...lists, ...importedData }; // mescla com as existentes
-                        saveLists();
-                        loadListSelector();
-                        loadRecentLists();
-                        alert("Listas importadas com sucesso!");
-                    } else {
-                        alert("Arquivo invalido!");
-                    }
-                } catch (err) {
-                    alert("Erro ao importar JSON: " + err.message);
-                }
-            };
-            reader.readAsText(file);
-        }
-
-
-
-        // Inicializar
-        loadListSelector();
-        loadRecentLists();
-    </script>
+    document.getElementById('listSelect').addEventListener('change',function(){selectList(this.value)});
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme')||'light');
+    updateThemeToggle();
+    loadListSelector();
+loadRecentLists();
+  </script>
 </body>
 </html>
