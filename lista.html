@@ -217,6 +217,44 @@
             background: rgba(76, 175, 80, 0.1);
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--container-bg);
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            color: var(--text-primary);
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .modal input {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
     .item.completed { text-decoration: line-through; opacity: 0.6; }
   </style>
 </head>
@@ -272,6 +310,19 @@
       </div>
     </div>
   </div>
+
+    <!-- Modal de Confirmacao de Exclusao -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+            <h3>Confirmar Exclusao</h3>
+            <p id="deleteMessage">Tem certeza que deseja excluir esta lista?</p>
+            <div class="modal-buttons">
+                <button onclick="closeDeleteModal()">Cancelar</button>
+                <button onclick="confirmDelete()" class="btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
 
   <script>
     let lists = JSON.parse(localStorage.getItem('shoppingLists') || '{}');
@@ -331,32 +382,57 @@
       themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
     }
 
-        function loadRecentLists() {
-            const container = document.getElementById('recentListsContainer');
-            
-            // Obter listas ordenadas por data de criacao (mais recentes primeiro)
-            const sortedLists = Object.entries(lists)
-                .sort((a, b) => new Date(b[1].created || 0) - new Date(a[1].created || 0))
-                .slice(0, 3); // Apenas as 3 mais recentes
+	function loadRecentLists() {
+		const container = document.getElementById('recentListsContainer');
+		
+		// Obter listas ordenadas por data de criacao (mais recentes primeiro)
+		const sortedLists = Object.entries(lists)
+			.sort((a, b) => new Date(b[1].created || 0) - new Date(a[1].created || 0))
+			.slice(0, 3); // Apenas as 3 mais recentes
 
-            if (sortedLists.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 20px;">
-                        Nenhuma lista criada ainda
-                    </div>
-                `;
+		if (sortedLists.length === 0) {
+			container.innerHTML = `
+				<div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 20px;">
+					Nenhuma lista criada ainda
+				</div>
+			`;
+			return;
+		}
+
+		container.innerHTML = sortedLists.map(([listId, list]) => `
+			<div class="recent-item ${currentListId === listId ? 'active' : ''}" 
+				 onclick="selectList('${listId}')" title="Clique para abrir esta lista">
+				<div style="font-weight: 500; margin-bottom: 2px;">${list.name}</div>
+				<div style="font-size: 0.8em; color: var(--text-secondary);">
+					${list.items.length} itens ${formatDate(list.created)}
+				</div>
+			</div>
+		`).join('');
+	}
+	
+	function showDeleteConfirm() {
+            if (!currentListId || !lists[currentListId]) {
+                alert('Nenhuma lista selecionada');
                 return;
             }
 
-            container.innerHTML = sortedLists.map(([listId, list]) => `
-                <div class="recent-item ${currentListId === listId ? 'active' : ''}" 
-                     onclick="selectList('${listId}')" title="Clique para abrir esta lista">
-                    <div style="font-weight: 500; margin-bottom: 2px;">${list.name}</div>
-                    <div style="font-size: 0.8em; color: var(--text-secondary);">
-                        ${list.items.length} itens ${formatDate(list.created)}
-                    </div>
-                </div>
-            `).join('');
+            document.getElementById('deleteMessage').textContent = 
+                `Tem certeza que deseja excluir a lista "${lists[currentListId].name}"? Esta acao nao pode ser desfeita.`;
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        function confirmDelete() {
+            if (currentListId && lists[currentListId]) {
+                delete lists[currentListId];
+                saveLists();
+                loadListSelector();
+                selectList('');
+            }
+            closeDeleteModal();
         }
 
     function loadListSelector() {
@@ -502,7 +578,7 @@
     `;
     return;
   }
-
+        
   container.innerHTML = sortedLists.map(([listId, list]) => `
     <div class="recent-item ${currentListId === listId ? 'active' : ''}" 
          onclick="selectList('${listId}')" title="Clique para abrir esta lista">
