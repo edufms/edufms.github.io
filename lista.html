@@ -616,7 +616,7 @@
         function loadRecentLists() {
             const container = document.getElementById('recentListsContainer');
             
-            // Obter listas ordenadas por data de cria莽茫o (mais recentes primeiro)
+            // Obter listas ordenadas por data de criacao (mais recentes primeiro)
             const sortedLists = Object.entries(lists)
                 .sort((a, b) => new Date(b[1].created || 0) - new Date(a[1].created || 0))
                 .slice(0, 3); // Apenas as 3 mais recentes
@@ -635,7 +635,7 @@
                      onclick="selectList('${listId}')" title="Clique para abrir esta lista">
                     <div style="font-weight: 500; margin-bottom: 2px;">${list.name}</div>
                     <div style="font-size: 0.8em; color: var(--text-secondary);">
-                        ${list.items.length} itens 鈥� ${formatDate(list.created)}
+                        ${list.items.length} itens ${formatDate(list.created)}
                     </div>
                 </div>
             `).join('');
@@ -650,7 +650,7 @@
             
             if (diffDays === 1) return 'Hoje';
             if (diffDays === 2) return 'Ontem';
-            if (diffDays <= 7) return `${diffDays - 1} dias atr谩s`;
+            if (diffDays <= 7) return `${diffDays - 1} dias atras`;
             return date.toLocaleDateString('pt-BR');
         }
 
@@ -694,7 +694,7 @@
         }
 
         function selectList(listId) {
-            // Cancelar qualquer edi莽茫o em andamento
+            // Cancelar qualquer edicao em andamento
             if (editingItemId) {
                 cancelEdit();
             }
@@ -723,7 +723,7 @@
             }
 
             document.getElementById('deleteMessage').textContent = 
-                `Tem certeza que deseja excluir a lista "${lists[currentListId].name}"? Esta a莽茫o n茫o pode ser desfeita.`;
+                `Tem certeza que deseja excluir a lista "${lists[currentListId].name}"? Esta acao nao pode ser desfeita.`;
             document.getElementById('deleteModal').style.display = 'block';
         }
 
@@ -783,9 +783,9 @@
             if (items.length === 0) {
                 container.innerHTML = `
                     <div class="empty-list">
-                        <div style="font-size: 3em; margin-bottom: 20px;">馃摑</div>
+                        <div style="font-size: 3em; margin-bottom: 20px;">--</div>
                         <h3>Lista vazia</h3>
-                        <p>Adicione alguns itens para come莽ar!</p>
+                        <p>Adicione alguns itens para comecar!</p>
                     </div>
                 `;
             } else {
@@ -797,13 +797,13 @@
                         <div class="item-info">
                             <span class="item-name">${item.name}</span>
                             <span class="item-price" onclick="startEdit('${item.id}')" 
-                                  title="Clique para editar o pre莽o">
+                                  title="Clique para editar o preco">
                                 R$ ${item.price.toFixed(2).replace('.', ',')}
                             </span>
                         </div>
                         <div class="item-actions">
                             <button class="action-btn" onclick="confirmDeleteItem('${item.id}')" 
-                                    title="Excluir item">馃棏锔�</button>
+                                    title="Excluir item">Excluir</button>
                         </div>
                     </div>
                 `).join('');
@@ -824,7 +824,7 @@
         }
 
         function startEdit(itemId) {
-            // Cancelar edi莽茫o anterior se existir
+            // Cancelar edicao anterior se existir
             if (editingItemId && editingItemId !== itemId) {
                 cancelEdit();
             }
@@ -834,7 +834,7 @@
 
             editingItemId = itemId;
             
-            // Encontrar o elemento do pre莽o
+            // Encontrar o elemento do preco
             const priceElements = document.querySelectorAll('.item-price');
             const priceElement = Array.from(priceElements).find(el => {
                 return el.onclick.toString().includes(itemId);
@@ -963,7 +963,7 @@
                         loadRecentLists();
                         alert("Listas importadas com sucesso!");
                     } else {
-                        alert("Arquivo inválido!");
+                        alert("Arquivo invalido!");
                     }
                 } catch (err) {
                     alert("Erro ao importar JSON: " + err.message);
