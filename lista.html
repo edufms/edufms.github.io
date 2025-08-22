@@ -521,6 +521,10 @@
                         <input type="text" id="newListName" placeholder="Nome da nova lista">
                         <button onclick="createList()">Criar Lista</button>
                         <button onclick="showDeleteConfirm()" class="btn-danger">Excluir Lista</button>
+                        <button onclick="exportLists()" class="btn-info">Exportar JSON</button>
+                        <input type="file" id="importFile" style="display:none" accept="application/json" onchange="importLists(event)">
+                        <button onclick="document.getElementById('importFile').click()" class="btn-secondary">Importar JSON</button>
+
                     </div>
                 </div>
 
@@ -930,6 +934,45 @@
                 closeDeleteModal();
             }
         });
+
+        function exportLists() {
+            const dataStr = JSON.stringify(lists, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "listas_de_compras.json";
+            a.click();
+
+            URL.revokeObjectURL(url);
+        }
+
+        function importLists(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (typeof importedData === "object" && importedData !== null) {
+                        lists = { ...lists, ...importedData }; // mescla com as existentes
+                        saveLists();
+                        loadListSelector();
+                        loadRecentLists();
+                        alert("Listas importadas com sucesso!");
+                    } else {
+                        alert("Arquivo inválido!");
+                    }
+                } catch (err) {
+                    alert("Erro ao importar JSON: " + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+
 
         // Inicializar
         loadListSelector();
