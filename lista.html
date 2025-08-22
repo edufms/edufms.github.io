@@ -506,8 +506,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">馃寵</button>
-            <h1>馃洅 Lista de Compras</h1>
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">Lista</button>
+            <h1>Lista de Compras</h1>
             <p>Organize suas compras de forma inteligente</p>
         </div>
 
@@ -529,7 +529,7 @@
                 </div>
 
                 <div class="recent-lists">
-                    <h3>馃搵 Listas Recentes</h3>
+                    <h3>Listas Recentes</h3>
                     <div id="recentListsContainer">
                         <div style="text-align: center; color: var(--text-secondary); font-size: 0.9em; padding: 20px;">
                             Nenhuma lista criada ainda
@@ -551,12 +551,17 @@
 
             <div id="currentListContainer" style="display: none;">
                 <div class="current-list">
-                    <div class="list-header">
-                        <div class="list-title" id="currentListTitle">Minha Lista</div>
-                        <div class="total-display">
-                            Total: R$ <span id="totalAmount">0,00</span>
-                        </div>
-                    </div>
+					<div class="list-header">
+						<div class="list-title" id="currentListTitle">Minha Lista</div>
+						<div>
+							<div class="total-display">
+								Total (concluídos): R$ <span id="totalAmount">0,00</span>
+							</div>
+							<div class="total-display" style="margin-top:5px; background: rgba(255,255,255,0.15);">
+								Valor Previsto: R$ <span id="valorPrevisto">0,00</span>
+							</div>
+						</div>
+					</div>
                     <div class="items-container" id="itemsContainer">
                         <div class="empty-list">
                             <div style="font-size: 3em; margin-bottom: 20px;">馃摑</div>
@@ -898,16 +903,23 @@
             }
         }
 
-        function updateTotal() {
-            if (!currentListId || !lists[currentListId]) return;
+		function updateTotal() {
+			if (!currentListId || !lists[currentListId]) return;
 
-            const items = lists[currentListId].items;
-            const total = items
-                .filter(item => item.completed)
-                .reduce((sum, item) => sum + item.price, 0);
+			const items = lists[currentListId].items;
 
-            document.getElementById('totalAmount').textContent = total.toFixed(2).replace('.', ',');
-        }
+			// Total concluído (já existe)
+			const total = items
+				.filter(item => item.completed)
+				.reduce((sum, item) => sum + item.price, 0);
+
+			document.getElementById('totalAmount').textContent = total.toFixed(2).replace('.', ',');
+
+			// Valor previsto (todos os itens)
+			const previsto = items.reduce((sum, item) => sum + item.price, 0);
+			document.getElementById('valorPrevisto').textContent = previsto.toFixed(2).replace('.', ',');
+		}
+
 
         // Event listeners
         document.getElementById('listSelect').addEventListener('change', function() {
