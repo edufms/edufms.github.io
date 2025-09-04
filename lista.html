@@ -129,6 +129,24 @@
       gap: 10px;
     }
 
+    /* Tablet: reduz a quantidade de colunas */
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 2fr 1fr auto;
+      }
+    }
+
+    /* Celular: empilha tudo em uma única coluna */
+    @media (max-width: 500px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row button {
+        width: 100%;
+      }
+    }
+
     .current-list {
       background: var(--container-bg);
       border-radius: 15px;
