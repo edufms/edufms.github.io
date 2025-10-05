@@ -152,7 +152,7 @@
       if (!currentListId) return;
       const name = document.getElementById('itemName').value.trim();
       const price = parseFloat(document.getElementById('itemPrice').value) || 0;
-      const qty = parseInt(document.getElementById('itemQty').value) || 1;
+      const qty = parseFloat(document.getElementById('itemQty').value) || 1;
       if (!name) return alert('Digite o nome do item');
       const item = { id: 'item_' + Date.now(), name, price, quantity: qty, completed: false };
       lists[currentListId].items.push(item);
@@ -173,7 +173,7 @@
           <div class="item ${item.completed ? 'completed' : ''}">
             <input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleItem('${item.id}')">
             <div class="item-info">
-              <span class="item-name">${item.name}</span>
+              <span class="item-name" onclick="startEdit('${item.id}','name')">${item.name}</span>
               <span class="item-price" onclick="startEdit('${item.id}','price')">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
               <span class="item-qty" onclick="startEdit('${item.id}','quantity')">Qtd: ${item.quantity}</span>
               <span class="item-total">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
@@ -197,12 +197,29 @@
       const item = lists[currentListId].items.find(i => i.id === itemId);
       if (!item) return;
       editingItemId = itemId;
-      let selector = field === "price" ? ".item-price" : ".item-qty";
+
+      let selector;
+      if (field === "price") selector = ".item-price";
+      else if (field === "quantity") selector = ".item-qty";
+      else if (field === "name") selector = ".item-name";
+
       const elements = document.querySelectorAll(selector);
       const element = Array.from(elements).find(el => el.onclick.toString().includes(itemId));
       if (element) {
-        const currentValue = field === "price" ? item.price.toFixed(2) : item.quantity;
-        element.innerHTML = `<input type="number" class="price-input" value="${currentValue}" step="${field === "price" ? "0.01" : "1"}" min="0" id="editInput_${itemId}_${field}" onkeypress="handleEditKeypress(event,'${itemId}','${field}')" onblur="saveEdit('${itemId}','${field}')">`;
+        const currentValue =
+          field === "price" ? item.price.toFixed(2) :
+          field === "quantity" ? item.quantity :
+          item.name;
+        const inputType = field === "name" ? "text" : "number";
+        const step = field === "price" ? "0.01" : field === "quantity" ? "0.01" : "";
+        element.innerHTML = `
+          <input type="${inputType}" class="price-input"
+                value="${currentValue}"
+                step="${step}" min="0"
+                id="editInput_${itemId}_${field}"
+                onkeypress="handleEditKeypress(event,'${itemId}','${field}')"
+                onblur="saveEdit('${itemId}','${field}')">
+        `;
         const input = document.getElementById(`editInput_${itemId}_${field}`);
         input.focus(); input.select();
       }
@@ -213,11 +230,17 @@
     function saveEdit(itemId, field) {
       const input = document.getElementById(`editInput_${itemId}_${field}`);
       if (!input) return;
-      const newValue = field === "price" ? parseFloat(input.value) || 0 : parseInt(input.value) || 1;
+      let newValue;
+      if (field === "price" || field === "quantity") newValue = parseFloat(input.value) || 0;
+      else newValue = input.value.trim();
+
       const item = lists[currentListId].items.find(i => i.id === itemId);
-      if (item) { if (field==="price") item.price=newValue; if (field==="quantity") item.quantity=newValue; saveLists(); }
-      editingItemId=null; loadItems();
+      if (item) item[field] = newValue;
+      saveLists();
+      editingItemId = null;
+      loadItems();
     }
+
 
     function cancelEdit(){ editingItemId=null; loadItems(); }
 
