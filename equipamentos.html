@@ -44,10 +44,11 @@
   <div class="row">
     <input id="equipName" placeholder="Nome do equipamento" style="flex:1" />
     <select id="equipRarity">
+      <option value="Pobre">Pobre</option>
       <option value="Comum">Comum</option>
-      <option value="Raro">Raro</option>
-      <option value="Épico">Épico</option>
-      <option value="Lendário">Lendário</option>
+      <option value="Incomum">Incomum</option>
+      <option value="Avançado">Avançado</option>
+      <option value="Supremo">Supremo</option>
     </select>
     <button id="addEquipBtn">➕ Adicionar Equipamento</button>
   </div>
@@ -73,7 +74,7 @@
 const STATUS = [
   "HP","DEF","Atq","Vel Atq","Evasão","Taxa Critica","Dano Critico",
   "Dano Undead","Dano Demon","Dano Primate","Dano Boss",
-  "Redução no Consumo de Saciedade","Redução no Consumo de HUmor","Redução no Consumo de Vigor",
+  "Red no Consumo de Saciedade","Red no Consumo de HUmor","Red no Consumo de Vigor",
   "Velocidade de Movimento","Chance de material extra","Chance de Ouro extra"
 ];
 const STORAGE_KEY = "heroEquipDB_v2";
