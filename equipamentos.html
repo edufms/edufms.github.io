@@ -1,227 +1,265 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Cadastro de Equipamentos por Herói</title>
-<style>
-  :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.4}
-  body{max-width:1100px;margin:28px auto;padding:20px;border-radius:8px;background:#f7f7fb;color:#111}
-  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
-  h1{font-size:1.2rem;margin:0}
-  .row{display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
-  input,select,button,textarea{padding:8px;border-radius:6px;border:1px solid #d0d0d6}
-  button{cursor:pointer}
-  .panel{background:#fff;padding:14px;border-radius:8px;box-shadow:0 6px 18px rgba(10,10,50,0.04);margin-bottom:14px}
-  table{width:100%;border-collapse:collapse;font-size:0.95rem}
-  th,td{padding:8px;border-bottom:1px solid #eee;text-align:left}
-  th{background:#fafafa;font-weight:600}
-  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
-  label{display:block;font-size:0.85rem;color:#444;margin-bottom:6px}
-  .small{font-size:0.85rem;color:#666}
-  .danger{color:#a33}
-  .sum-box{background:#f2fbf6;padding:10px;border-radius:6px;border:1px solid #e0f0e6}
-  footer{font-size:0.85rem;color:#666;margin-top:8px}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cadastro de Equipamentos por Herói</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f7f7fb;
+      color: #111;
+    }
+    footer {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .sum-box {
+      background: #f2fbf6;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #e0f0e6;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>Cadastro de Equipamentos por Herói</h1>
-  <div class="small">Armazena tudo no <strong>localStorage</strong> — dados locais, offline e voláteis como sorte de loot.</div>
-</header>
+  <div class="container py-4">
+    <header class="mb-4">
+      <h1 class="h4 mb-2">Cadastro de Equipamentos por Herói</h1>
+      <p class="text-muted small mb-0">
+        Armazena tudo no <strong>localStorage</strong> — dados locais, offline e voláteis como sorte de loot.
+      </p>
+    </header>
 
-<div class="panel">
-  <div style="display:flex;gap:8px;align-items:center;">
-    <input id="heroName" placeholder="Nome do herói (ex: Arthor)" />
-    <button id="addHeroBtn">➕ Adicionar Herói</button>
-    <select id="heroSelect" style="min-width:220px"></select>
-    <button id="deleteHeroBtn" class="danger">🗑️ Remover Herói</button>
+    <!-- Painel de Heróis -->
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <div class="row g-2 align-items-center">
+          <div class="col-md-4">
+            <input id="heroName" class="form-control" placeholder="Nome do herói (ex: Arthor)" />
+          </div>
+          <div class="col-md-auto">
+            <button id="addHeroBtn" class="btn btn-success">➕ Adicionar Herói</button>
+          </div>
+          <div class="col-md-4">
+            <select id="heroSelect" class="form-select"></select>
+          </div>
+          <div class="col-md-auto">
+            <button id="deleteHeroBtn" class="btn btn-outline-danger">🗑️ Remover Herói</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel de Equipamentos -->
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Cadastrar / Editar Equipamento</h5>
+        <div class="row g-2 mb-3">
+          <div class="col-md-5">
+            <input id="equipName" class="form-control" placeholder="Nome do equipamento" />
+          </div>
+          <div class="col-md-3">
+            <select id="equipRarity" class="form-select">
+              <option value="Pobre">Pobre</option>
+              <option value="Comum">Comum</option>
+              <option value="Incomum">Incomum</option>
+              <option value="Avançado">Avançado</option>
+              <option value="Supremo">Supremo</option>
+            </select>
+          </div>
+          <div class="col-md-auto">
+            <button id="addEquipBtn" class="btn btn-primary">➕ Adicionar Equipamento</button>
+          </div>
+        </div>
+
+        <p><strong>Preencha os valores dos status (números). Campos vazios = 0.</strong></p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2" id="statsInputs"></div>
+      </div>
+    </div>
+
+    <!-- Painel de Equipamentos do Herói -->
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Equipamentos do Herói</h5>
+        <div id="equipListWrap"></div>
+      </div>
+    </div>
+
+    <!-- Painel de Totais -->
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Soma Total dos Status</h5>
+        <div id="totals" class="sum-box"></div>
+      </div>
+    </div>
+
+    <footer>Feito com ceticismo, humor e esperança de um futuro com menos bugs. ⚙️</footer>
   </div>
-</div>
 
-<div class="panel" id="equipPanel">
-  <h3 style="margin-top:0">Cadastrar / Editar Equipamento</h3>
-  <div class="row">
-    <input id="equipName" placeholder="Nome do equipamento" style="flex:1" />
-    <select id="equipRarity">
-      <option value="Pobre">Pobre</option>
-      <option value="Comum">Comum</option>
-      <option value="Incomum">Incomum</option>
-      <option value="Avançado">Avançado</option>
-      <option value="Supremo">Supremo</option>
-    </select>
-    <button id="addEquipBtn">➕ Adicionar Equipamento</button>
-  </div>
-  <div style="margin-top:10px">
-    <strong>Preencha os valores dos status (números). Campos vazios = 0.</strong>
-    <div class="stats-grid" id="statsInputs"></div>
-  </div>
-</div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<div class="panel">
-  <h3 style="margin-top:0">Equipamentos do Herói</h3>
-  <div id="equipListWrap"></div>
-</div>
+  <script>
+    const STATUS = [
+      "HP","DEF","Atq","Vel Atq","Evasão","Taxa Critica","Dano Critico",
+      "Dano Undead","Dano Demon","Dano Primate","Dano Boss",
+      "Red no Consumo de Saciedade","Red no Consumo de Humor","Red no Consumo de Vigor",
+      "Velocidade de Movimento","Chance de material extra","Chance de Ouro extra"
+    ];
+    const STORAGE_KEY = "heroEquipDB_v2";
 
-<div class="panel">
-  <h3 style="margin-top:0">Soma Total dos Status</h3>
-  <div id="totals" class="sum-box"></div>
-</div>
+    let DB = loadDB();
+    let editingIndex = null;
 
-<footer>Feito com ceticismo, humor e esperança de um futuro com menos bugs. ⚙️</footer>
+    function loadDB(){
+      try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {heroes:{}}; }
+      catch(e){ return {heroes:{}}; }
+    }
+    function saveDB(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
 
-<script>
-const STATUS = [
-  "HP","DEF","Atq","Vel Atq","Evasão","Taxa Critica","Dano Critico",
-  "Dano Undead","Dano Demon","Dano Primate","Dano Boss",
-  "Red no Consumo de Saciedade","Red no Consumo de HUmor","Red no Consumo de Vigor",
-  "Velocidade de Movimento","Chance de material extra","Chance de Ouro extra"
-];
-const STORAGE_KEY = "heroEquipDB_v2";
-
-let DB = loadDB();
-let editingIndex = null; // modo edição
-
-function loadDB(){
-  try{ const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {heroes:{}}; }
-  catch(e){ return {heroes:{}}; }
-}
-function saveDB(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
-
-const statsInputsEl = document.getElementById("statsInputs");
-STATUS.forEach(s=>{
-  const div=document.createElement("div");
-  div.innerHTML=`<label>${s}</label><input data-stat="${s}" type="number" step="any" placeholder="0" />`;
-  statsInputsEl.appendChild(div);
-});
-
-const heroSelect=document.getElementById("heroSelect");
-const heroNameIn=document.getElementById("heroName");
-const addHeroBtn=document.getElementById("addHeroBtn");
-const deleteHeroBtn=document.getElementById("deleteHeroBtn");
-const equipNameIn=document.getElementById("equipName");
-const equipRarity=document.getElementById("equipRarity");
-const addEquipBtn=document.getElementById("addEquipBtn");
-const equipListWrap=document.getElementById("equipListWrap");
-const totalsEl=document.getElementById("totals");
-
-function refreshHeroSelect(){
-  heroSelect.innerHTML="";
-  const keys=Object.keys(DB.heroes);
-  if(keys.length===0){
-    const opt=document.createElement("option");opt.text="— Sem heróis —";opt.value="";
-    heroSelect.appendChild(opt); refreshEquipList(); updateTotals(); return;
-  }
-  keys.forEach(k=>{
-    const opt=document.createElement("option");
-    opt.value=k;opt.text=k;heroSelect.appendChild(opt);
-  });
-  if(!heroSelect.value) heroSelect.value=keys[0];
-  refreshEquipList(); updateTotals();
-}
-
-function refreshEquipList(){
-  const hero=heroSelect.value;
-  equipListWrap.innerHTML="";
-  if(!hero||!DB.heroes[hero]){
-    equipListWrap.innerHTML="<div class='small'>Selecione um herói.</div>";return;
-  }
-  const equips=DB.heroes[hero].equips||[];
-  if(equips.length===0){equipListWrap.innerHTML="<div class='small'>Nenhum equipamento cadastrado.</div>";return;}
-  const t=document.createElement("table");
-  const th=document.createElement("thead");
-  th.innerHTML="<tr><th>Nome</th><th>Raridade</th><th>Resumo</th><th>Ações</th></tr>";
-  t.appendChild(th);
-  const tb=document.createElement("tbody");
-  equips.forEach((eq,i)=>{
-    const stats=STATUS.map(s=>eq.stats[s]?`${s}: ${eq.stats[s]}`:null).filter(Boolean).join("; ");
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${escapeHtml(eq.name)}</td><td>${escapeHtml(eq.rarity)}</td>
-                  <td>${escapeHtml(stats||"—")}</td>
-                  <td>
-                    <button data-idx="${i}" class="edit-eq">✏️ Editar</button>
-                    <button data-idx="${i}" class="del-eq">🗑️ Remover</button>
-                  </td>`;
-    tb.appendChild(tr);
-  });
-  t.appendChild(tb); equipListWrap.appendChild(t);
-
-  equipListWrap.querySelectorAll(".del-eq").forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.idx;
-    if(!confirm("Remover equipamento?"))return;
-    DB.heroes[hero].equips.splice(i,1);
-    saveDB(); refreshEquipList(); updateTotals();
-  });
-
-  equipListWrap.querySelectorAll(".edit-eq").forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.idx;
-    const eq=DB.heroes[hero].equips[i];
-    editingIndex=i;
-    equipNameIn.value=eq.name;
-    equipRarity.value=eq.rarity;
+    const statsInputsEl = document.getElementById("statsInputs");
     STATUS.forEach(s=>{
-      const inp=statsInputsEl.querySelector(`[data-stat='${s}']`);
-      inp.value=eq.stats[s]||"";
+      const div=document.createElement("div");
+      div.className="col";
+      div.innerHTML=`
+        <label class="form-label small mb-1">${s}</label>
+        <input data-stat="${s}" type="number" step="any" class="form-control form-control-sm" placeholder="0" />
+      `;
+      statsInputsEl.appendChild(div);
     });
-    addEquipBtn.textContent="💾 Salvar Alterações";
-    addEquipBtn.style.background="#d8f5d0";
-  });
-}
 
-function updateTotals(){
-  const hero=heroSelect.value;
-  const totals={}; STATUS.forEach(s=>totals[s]=0);
-  if(hero&&DB.heroes[hero]){
-    DB.heroes[hero].equips.forEach(eq=>{
-      STATUS.forEach(s=>{ totals[s]+=Number(eq.stats[s]||0); });
-    });
-  }
-  totalsEl.innerHTML=STATUS.map(s=>`<div><strong>${s}:</strong> ${totals[s]}</div>`).join("");
-}
+    const heroSelect=document.getElementById("heroSelect");
+    const heroNameIn=document.getElementById("heroName");
+    const addHeroBtn=document.getElementById("addHeroBtn");
+    const deleteHeroBtn=document.getElementById("deleteHeroBtn");
+    const equipNameIn=document.getElementById("equipName");
+    const equipRarity=document.getElementById("equipRarity");
+    const addEquipBtn=document.getElementById("addEquipBtn");
+    const equipListWrap=document.getElementById("equipListWrap");
+    const totalsEl=document.getElementById("totals");
 
-addHeroBtn.onclick=()=>{
-  const name=(heroNameIn.value||"").trim();
-  if(!name)return alert("Digite o nome do herói!");
-  if(DB.heroes[name])return alert("Herói já existe!");
-  DB.heroes[name]={equips:[]}; saveDB(); heroNameIn.value=""; refreshHeroSelect(); heroSelect.value=name;
-};
+    function refreshHeroSelect(){
+      heroSelect.innerHTML="";
+      const keys=Object.keys(DB.heroes);
+      if(keys.length===0){
+        const opt=document.createElement("option");opt.text="— Sem heróis —";opt.value="";
+        heroSelect.appendChild(opt); refreshEquipList(); updateTotals(); return;
+      }
+      keys.forEach(k=>{
+        const opt=document.createElement("option");
+        opt.value=k;opt.text=k;heroSelect.appendChild(opt);
+      });
+      if(!heroSelect.value) heroSelect.value=keys[0];
+      refreshEquipList(); updateTotals();
+    }
 
-deleteHeroBtn.onclick=()=>{
-  const hero=heroSelect.value;
-  if(!hero)return;
-  if(!confirm(`Remover ${hero} e todos os equipamentos?`))return;
-  delete DB.heroes[hero]; saveDB(); refreshHeroSelect();
-};
+    function refreshEquipList(){
+      const hero=heroSelect.value;
+      equipListWrap.innerHTML="";
+      if(!hero||!DB.heroes[hero]){
+        equipListWrap.innerHTML="<div class='text-muted small'>Selecione um herói.</div>";return;
+      }
+      const equips=DB.heroes[hero].equips||[];
+      if(equips.length===0){equipListWrap.innerHTML="<div class='text-muted small'>Nenhum equipamento cadastrado.</div>";return;}
+      const t=document.createElement("table");
+      t.className="table table-sm align-middle";
+      const th=document.createElement("thead");
+      th.innerHTML="<tr><th>Nome</th><th>Raridade</th><th>Resumo</th><th>Ações</th></tr>";
+      t.appendChild(th);
+      const tb=document.createElement("tbody");
+      equips.forEach((eq,i)=>{
+        const stats=STATUS.map(s=>eq.stats[s]?`${s}: ${eq.stats[s]}`:null).filter(Boolean).join("; ");
+        const tr=document.createElement("tr");
+        tr.innerHTML=`<td>${escapeHtml(eq.name)}</td><td>${escapeHtml(eq.rarity)}</td>
+                      <td>${escapeHtml(stats||"—")}</td>
+                      <td>
+                        <button data-idx="${i}" class="btn btn-warning btn-sm edit-eq">✏️</button>
+                        <button data-idx="${i}" class="btn btn-danger btn-sm del-eq">🗑️</button>
+                      </td>`;
+        tb.appendChild(tr);
+      });
+      t.appendChild(tb); equipListWrap.appendChild(t);
 
-addEquipBtn.onclick=()=>{
-  const hero=heroSelect.value;
-  if(!hero)return alert("Selecione um herói primeiro.");
-  const name=(equipNameIn.value||"").trim(); if(!name)return alert("Informe o nome do equipamento.");
-  const rarity=equipRarity.value;
-  const stats={};
-  statsInputsEl.querySelectorAll("input").forEach(inp=>{
-    const val=inp.value.trim(); if(val!=="") stats[inp.dataset.stat]=Number(val);
-  });
+      equipListWrap.querySelectorAll(".del-eq").forEach(b=>b.onclick=()=>{
+        const i=+b.dataset.idx;
+        if(!confirm("Remover equipamento?"))return;
+        DB.heroes[hero].equips.splice(i,1);
+        saveDB(); refreshEquipList(); updateTotals();
+      });
 
-  const newEquip={name,rarity,stats};
-  if(editingIndex!==null){
-    DB.heroes[hero].equips[editingIndex]=newEquip;
-    editingIndex=null;
-    addEquipBtn.textContent="➕ Adicionar Equipamento";
-    addEquipBtn.style.background="";
-  }else{
-    DB.heroes[hero].equips.push(newEquip);
-  }
-  saveDB();
-  equipNameIn.value=""; statsInputsEl.querySelectorAll("input").forEach(i=>i.value="");
-  refreshEquipList(); updateTotals();
-};
+      equipListWrap.querySelectorAll(".edit-eq").forEach(b=>b.onclick=()=>{
+        const i=+b.dataset.idx;
+        const eq=DB.heroes[hero].equips[i];
+        editingIndex=i;
+        equipNameIn.value=eq.name;
+        equipRarity.value=eq.rarity;
+        STATUS.forEach(s=>{
+          const inp=statsInputsEl.querySelector(`[data-stat='${s}']`);
+          inp.value=eq.stats[s]||"";
+        });
+        addEquipBtn.textContent="💾 Salvar Alterações";
+        addEquipBtn.classList.replace("btn-primary","btn-success");
+      });
+    }
 
-heroSelect.onchange=()=>{refreshEquipList();updateTotals();};
+    function updateTotals(){
+      const hero=heroSelect.value;
+      const totals={}; STATUS.forEach(s=>totals[s]=0);
+      if(hero&&DB.heroes[hero]){
+        DB.heroes[hero].equips.forEach(eq=>{
+          STATUS.forEach(s=>{ totals[s]+=Number(eq.stats[s]||0); });
+        });
+      }
+      totalsEl.innerHTML=STATUS.map(s=>`<div><strong>${s}:</strong> ${totals[s]}</div>`).join("");
+    }
 
-function escapeHtml(t){return String(t).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+    addHeroBtn.onclick=()=>{
+      const name=(heroNameIn.value||"").trim();
+      if(!name)return alert("Digite o nome do herói!");
+      if(DB.heroes[name])return alert("Herói já existe!");
+      DB.heroes[name]={equips:[]}; saveDB(); heroNameIn.value=""; refreshHeroSelect(); heroSelect.value=name;
+    };
 
-refreshHeroSelect();
-</script>
+    deleteHeroBtn.onclick=()=>{
+      const hero=heroSelect.value;
+      if(!hero)return;
+      if(!confirm(`Remover ${hero} e todos os equipamentos?`))return;
+      delete DB.heroes[hero]; saveDB(); refreshHeroSelect();
+    };
+
+    addEquipBtn.onclick=()=>{
+      const hero=heroSelect.value;
+      if(!hero)return alert("Selecione um herói primeiro.");
+      const name=(equipNameIn.value||"").trim(); if(!name)return alert("Informe o nome do equipamento.");
+      const rarity=equipRarity.value;
+      const stats={};
+      statsInputsEl.querySelectorAll("input").forEach(inp=>{
+        const val=inp.value.trim(); if(val!=="") stats[inp.dataset.stat]=Number(val);
+      });
+
+      const newEquip={name,rarity,stats};
+      if(editingIndex!==null){
+        DB.heroes[hero].equips[editingIndex]=newEquip;
+        editingIndex=null;
+        addEquipBtn.textContent="➕ Adicionar Equipamento";
+        addEquipBtn.classList.replace("btn-success","btn-primary");
+      }else{
+        DB.heroes[hero].equips.push(newEquip);
+      }
+      saveDB();
+      equipNameIn.value=""; statsInputsEl.querySelectorAll("input").forEach(i=>i.value="");
+      refreshEquipList(); updateTotals();
+    };
+
+    heroSelect.onchange=()=>{refreshEquipList();updateTotals();};
+
+    function escapeHtml(t){return String(t).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+
+    refreshHeroSelect();
+  </script>
 </body>
 </html>
