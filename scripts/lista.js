@@ -300,9 +300,37 @@ function formatDate(dateString) {
   return date.toLocaleDateString('pt-BR');
 }
 
+async function importFromClipboard() {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (!text) {
+      alert("A área de transferência está vazia.");
+      return;
+    }
 
-    document.getElementById('listSelect').addEventListener('change',function(){selectList(this.value)});
-    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme')||'light');
-    updateThemeToggle();
+    const importedData = JSON.parse(text);
+
+    if (typeof importedData !== "object" || importedData === null) {
+      alert("O conteúdo colado não é um JSON válido.");
+      return;
+    }
+
+    // Mescla com as listas existentes
+    lists = { ...lists, ...importedData };
+
+    saveLists();
     loadListSelector();
+    loadRecentLists();
+
+    alert("JSON importado com sucesso!");
+  } catch (err) {
+    alert("Erro ao ler ou importar o JSON: " + err.message);
+  }
+}
+
+
+document.getElementById('listSelect').addEventListener('change',function(){selectList(this.value)});
+document.documentElement.setAttribute('data-theme', localStorage.getItem('theme')||'light');
+updateThemeToggle();
+loadListSelector();
 loadRecentLists();
