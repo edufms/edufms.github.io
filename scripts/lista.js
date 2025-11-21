@@ -328,7 +328,7 @@ async function importFromClipboard() {
   }
 }
 
-
+window.importFromClipboard = importFromClipboard;
 document.getElementById('listSelect').addEventListener('change',function(){selectList(this.value)});
 document.documentElement.setAttribute('data-theme', localStorage.getItem('theme')||'light');
 updateThemeToggle();
