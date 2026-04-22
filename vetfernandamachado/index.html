@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dra. Fernanda Machado | Veterinária Domiciliar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7f9;
+      color: #333;
+    }
+
+    /* MENU FIXO */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #1f6f78;
+      font-weight: 500;
+    }
+
+    .navbar a:hover {
+      color: #25D366;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 100px auto 40px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .hero {
+      text-align: center;
+    }
+
+    .hero img {
+      width: 150px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      color: #1f6f78;
+    }
+
+    h2 {
+      margin: 0;
+      color: #4a8f96;
+      font-weight: normal;
+    }
+
+    .tagline {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    .region {
+      color: #555;
+      font-size: 15px;
+    }
+
+    .btn {
+      background: #25D366;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1ebe5d;
+    }
+
+    .section {
+      margin-top: 50px;
+    }
+
+    .section h3 {
+      color: #1f6f78;
+      margin-bottom: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .box {
+      background: #f7fbfc;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .instagram {
+      margin-top: 20px;
+    }
+
+    .instagram a {
+      color: #E1306C;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* BOTÃO FLUTUANTE WHATSAPP */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .whatsapp-float:hover {
+      background: #1ebe5d;
+    }
+
+    @media(max-width: 700px){
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <!-- MENU -->
+
+  <div class="navbar">
+    <a href="#inicio">Início</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#vantagens">Vantagens</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+
+```
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <img src="sua-imagem.png" alt="Pets">
+
+    <h1>Dra. Fernanda Machado</h1>
+    <h2>Médica Veterinária</h2>
+
+    <p class="tagline">
+      Atendimento domiciliar com mais conforto e menos estresse para seu pet
+    </p>
+
+    <p class="region">
+      📍 Jandira e região • Outras localidades sob consulta
+    </p>
+
+    <a class="btn" 
+       href="https://wa.me/5511940715885?text=Olá,%20gostaria%20de%20agendar%20um%20atendimento"
+       target="_blank">
+       Agendar pelo WhatsApp
+    </a>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="section">
+    <h3>Serviços</h3>
+
+    <div class="grid">
+      <div class="box">🐶 Consultas completas</div>
+      <div class="box">💉 Vacinação</div>
+      <div class="box">🧪 Exames</div>
+      <div class="box">🩹 Curativos</div>
+    </div>
+  </section>
+
+  <!-- VANTAGENS -->
+  <section id="vantagens" class="section">
+    <h3>Vantagens do atendimento domiciliar</h3>
+
+    <p>
+      ✔ Menos estresse para o pet<br>
+      ✔ Mais conforto e praticidade<br>
+      ✔ Atendimento individualizado<br>
+      ✔ Menor risco de exposição a doenças
+    </p>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="section">
+    <h3>Contato</h3>
+
+    <p>
+      📱 WhatsApp: (11) 94071-5885
+    </p>
+
+    <div class="instagram">
+      📸 <a href="https://www.instagram.com/medvet.fernandamachado/" target="_blank">
+        @medvet.fernandamachado
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 - Atendimento Veterinário Domiciliar
+  </footer>
+
+</div>
+```
+
+  </div>
+
+  <!-- BOTÃO FLUTUANTE -->
+
+<a class="whatsapp-float"
+  href="https://wa.me/5511940715885?text=Olá,%20gostaria%20de%20agendar%20um%20atendimento"
+  target="_blank">
+💬 </a>
+
+</body>
+</html>
