@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eduardo Machado | Especialista em Dados</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <header class="fixed w-full bg-white shadow z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="font-bold text-lg">Eduardo Machado</h1>
+      <nav class="space-x-6 hidden md:block">
+        <a href="#sobre" class="hover:text-blue-600">Sobre</a>
+        <a href="#servicos" class="hover:text-blue-600">Serviços</a>
+        <a href="#cases" class="hover:text-blue-600">Cases</a>
+        <a href="#contato" class="hover:text-blue-600">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white pt-32 pb-20">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+      <div class="animate-fade-in">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Dados que viram decisão</h1>
+        <p class="text-lg mb-6">Transformo dados públicos e empresariais em insights claros e acionáveis.</p>
+        <a href="#contato" class="bg-white text-blue-600 px-6 py-3 rounded-2xl font-semibold shadow hover:scale-105 transition">Fale comigo</a>
+      </div>
+      <div class="flex justify-center">
+        <img src="media/photo.png" alt="Foto - Eduardo Machado" class="rounded-2xl shadow-lg" />
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="max-w-5xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-bold mb-6 text-center">Sobre</h2>
+    <p class="text-center text-lg opacity-0 translate-y-10 transition-all duration-700" data-animate>
+      Especialista em dados com foco em prefeituras e sistemas públicos.
+      Atuo com ETL, dashboards e análise preditiva, ajudando gestores a tomarem decisões mais inteligentes.
+    </p>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="bg-gray-100 py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-10 text-center">Serviços</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-2xl shadow opacity-0 translate-y-10" data-animate>
+          <h3 class="text-xl font-semibold mb-3">Dashboards</h3>
+          <p>Visualização clara de dados para tomada de decisão.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow opacity-0 translate-y-10" data-animate>
+          <h3 class="text-xl font-semibold mb-3">ETL & Automação</h3>
+          <p>Processos automatizados e integração de dados.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow opacity-0 translate-y-10" data-animate>
+          <h3 class="text-xl font-semibold mb-3">Análise de Dados</h3>
+          <p>Insights estratégicos baseados em dados reais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section id="cases" class="max-w-6xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-bold mb-10 text-center">Cases Reais</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-2xl shadow opacity-0 translate-y-10" data-animate>
+        <h3 class="font-semibold mb-2">Dashboard Municipal</h3>
+        <p class="text-sm">Centralização de dados de cidadãos com indicadores estratégicos.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl shadow opacity-0 translate-y-10" data-animate>
+        <h3 class="font-semibold mb-2">API de Dados Públicos</h3>
+        <p class="text-sm">Integração com dados do governo para análise automatizada.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl shadow opacity-0 translate-y-10" data-animate>
+        <h3 class="font-semibold mb-2">App de Análise</h3>
+        <p class="text-sm">Aplicação em Streamlit para exploração de dados.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="bg-blue-600 text-white py-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-6">Contato</h2>
+      <p class="mb-6">Quer transformar dados em resultado? Vamos conversar.</p>
+      <a href="https://wa.me/5511930645909" target="_blank" class="bg-white text-blue-600 px-6 py-3 rounded-2xl font-semibold shadow hover:scale-105 transition">WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-400 text-center py-6">
+    <p>© 2026 - Eduardo Machado - Analista de Dados</p>
+  </footer>
+
+  <!-- SCRIPT ANIMAÇÃO -->
+  <script>
+    const elements = document.querySelectorAll('[data-animate]');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('opacity-0', 'translate-y-10');
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    elements.forEach(el => observer.observe(el));
+  </script>
+
+  <!-- BOTÃO WHATSAPP FLUTUANTE -->
+  <a href="https://wa.me/5511930645909" target="_blank"
+     class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition transform hover:scale-110 z-50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M20.52 3.48A11.91 11.91 0 0012.06 0C5.46 0 .08 5.38.08 11.98c0 2.11.55 4.17 1.6 5.98L0 24l6.2-1.62a11.94 11.94 0 005.86 1.5h.01c6.6 0 11.98-5.38 11.98-11.98 0-3.2-1.25-6.2-3.53-8.42zM12.07 21.5a9.46 9.46 0 01-4.82-1.33l-.35-.21-3.68.96.98-3.59-.23-.37a9.43 9.43 0 01-1.45-5.01c0-5.23 4.26-9.48 9.49-9.48 2.53 0 4.9.99 6.69 2.77a9.41 9.41 0 012.78 6.7c0 5.23-4.26 9.48-9.49 9.48zm5.2-7.07c-.28-.14-1.64-.81-1.9-.9-.26-.1-.45-.14-.64.14-.19.28-.73.9-.9 1.09-.16.19-.33.21-.61.07-.28-.14-1.18-.43-2.25-1.36-.83-.74-1.39-1.64-1.55-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.64-1.54-.88-2.11-.23-.55-.47-.47-.64-.48l-.55-.01c-.19 0-.5.07-.76.35-.26.28-1 1-.97 2.44.02 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 5 4.39.7.3 1.25.48 1.68.62.71.23 1.36.2 1.87.12.57-.09 1.64-.67 1.87-1.31.23-.64.23-1.19.16-1.31-.07-.12-.26-.19-.54-.33z"/>
+    </svg>
+  </a>
+
+</body>
+</html>
