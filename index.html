@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eduardo Machado | Analista de Dados</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <meta name="description" content="Eduardo Machado - Analista de Dados especialista em SQL, Python, Power BI e visualização de dados. Transformo dados em insights estratégicos.">
+    <meta property="og:title" content="Eduardo Machado | Analista de Dados">
+    <meta property="og:description" content="Transformando dados em insights valiosos e soluções de negócios.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://edufms.github.io">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/tailwind.min.css">
     <style>
+        html { scroll-behavior: smooth; }
         .bg-tech {
             background-color: #0f172a;
             background-image: radial-gradient(#64748b 0.5px, transparent 0.5px);
@@ -25,6 +33,42 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
         }
+        .scroll-down {
+            animation: bounce-down 2s ease-in-out infinite;
+        }
+        @keyframes bounce-down {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(10px); opacity: 0.6; }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #backToTop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #backToTop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-tech text-gray-100">
@@ -32,12 +76,38 @@
     <header class="bg-blue-900/80 backdrop-blur-sm py-4 sticky top-0 z-10">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold">Eduardo<span class="text-blue-400">.dev</span></h1>
-            <nav>
+            <nav class="hidden md:block">
                 <ul class="flex space-x-6">
                     <li><a href="#sobre" class="hover:text-blue-300 transition-colors">Sobre</a></li>
+                    <li><a href="#experiencia" class="hover:text-blue-300 transition-colors">Experiência</a></li>
+                    <li><a href="#formacao" class="hover:text-blue-300 transition-colors">Formação</a></li>
                     <li><a href="#habilidades" class="hover:text-blue-300 transition-colors">Habilidades</a></li>
                     <li><a href="#projetos" class="hover:text-blue-300 transition-colors">Projetos</a></li>
                     <li><a href="#contato" class="hover:text-blue-300 transition-colors">Contato</a></li>
+                </ul>
+            </nav>
+            <button id="menuBtn" class="md:hidden text-white focus:outline-none" aria-label="Abrir menu">
+                <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        <div id="mobileMenu" class="fixed inset-0 bg-blue-900/95 backdrop-blur-md z-50 hidden md:hidden">
+            <div class="flex justify-end p-4">
+                <button id="closeMenuBtn" class="text-white focus:outline-none" aria-label="Fechar menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col items-center justify-center h-full -mt-16">
+                <ul class="space-y-8 text-center">
+                    <li><a href="#sobre" class="text-2xl text-white hover:text-blue-300 transition-colors">Sobre</a></li>
+                    <li><a href="#experiencia" class="text-2xl text-white hover:text-blue-300 transition-colors">Experiência</a></li>
+                    <li><a href="#formacao" class="text-2xl text-white hover:text-blue-300 transition-colors">Formação</a></li>
+                    <li><a href="#habilidades" class="text-2xl text-white hover:text-blue-300 transition-colors">Habilidades</a></li>
+                    <li><a href="#projetos" class="text-2xl text-white hover:text-blue-300 transition-colors">Projetos</a></li>
+                    <li><a href="#contato" class="text-2xl text-white hover:text-blue-300 transition-colors">Contato</a></li>
                 </ul>
             </nav>
         </div>
@@ -68,14 +138,19 @@
             <div class="order-1 md:order-2 flex justify-center">
                 <div class="relative">
                     <div class="w-64 h-64 md:w-80 md:h-80 bg-blue-600 rounded-full overflow-hidden border-4 border-blue-300 shadow-lg shadow-blue-500/30">
-                        <img src="/media/photo.png" alt="Eduardo Machado" class="w-full h-full object-cover">
+                        <img src="/media/photo.webp" alt="Eduardo Machado" class="w-full h-full object-cover">
                     </div>
                     <div class="absolute -bottom-4 -right-4 bg-blue-900/90 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
                         <p class="font-bold">SP, Brasil</p>
-                        <p class="text-sm text-blue-200">36 anos</p>
+                        <p class="text-sm text-blue-200"><span id="hero-age"></span> anos</p>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="flex justify-center mt-8 scroll-down">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
         </div>
     </section>
 
@@ -88,14 +163,151 @@
             </h2>
             <div class="bg-blue-900/30 rounded-xl p-8 backdrop-blur-sm border border-blue-800/50 shadow-xl">
                 <p class="text-lg mb-6 text-gray-200">
-                    Sou Eduardo Machado, Analista de Dados, 37 anos, baseado em São Paulo. Transformo dados brutos em insights claros e acionáveis que apoiam decisões estratégicas.
+                    Sou Eduardo Machado, Analista de Dados, <span id="sobre-age"></span> anos, baseado em São Paulo. Transformo dados brutos em insights claros e acionáveis que apoiam decisões estratégicas.
                 </p>
-                <p class="text-lg mb-6 text-gray-200"></p>
+                <p class="text-lg mb-6 text-gray-200">
                     Minha atuação está focada na interseção entre tecnologia e análise de dados, ajudando empresas a enxergar oportunidades, reduzir incertezas e tomar decisões com mais confiança.
                 </p>
                 <p class="text-lg text-gray-200">
                     Minha experiência envolve a implementação de soluções de Business Intelligence, análise exploratória de dados, modelagem estatística e desenvolvimento de dashboards interativos. Estou constantemente aprimorando minhas habilidades técnicas e acompanhando as tendências emergentes no campo da análise de dados e ciência de dados.
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiência Section -->
+    <section id="experiencia" class="py-20 bg-blue-900/10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Experiência Profissional</span>
+                <div class="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 mr-4 ring-2 ring-blue-400">
+                            <i class="fas fa-briefcase text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Maestro Sistemas</h3>
+                            <span class="text-xs text-gray-400">Tempo integral · 11 a 9 m</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-blue-300 font-medium">Especialista em TI</p>
+                    <p class="text-xs text-gray-400 mb-3">mar de 2024 - o momento · 2 anos 5 meses · Americana, SP · Remoto</p>
+                    <ul class="text-sm text-gray-300 space-y-1.5 list-disc list-inside">
+                        <li>Análise e definição de customizações sistêmicas, atuando como ponte entre áreas de negócio e TI.</li>
+                        <li>Planejamento e execução de conversão e migração de dados, assegurando integridade das informações.</li>
+                        <li>Levantamento de requisitos e solicitação de integrações entre sistemas.</li>
+                        <li>Desenvolvimento de dashboards e relatórios gerenciais para tomada de decisão estratégica.</li>
+                        <li>Construção e manutenção de processos de ETL para estruturação de bases analíticas.</li>
+                        <li>Análise exploratória e cruzamento de dados para geração de insights.</li>
+                        <li>Gestão e validação de faturamento com conciliação entre sistema próprio e DATASUS.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-blue-800/30">
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Python</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">SQL</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Power BI</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">ETL</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Dashboards</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">DATASUS</span>
+                    </div>
+                </div>
+
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4">
+                            <i class="fas fa-laptop-code text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Maestro Sistemas</h3>
+                            <span class="text-xs text-gray-400">Tempo integral</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-blue-300 font-medium">Analista de Implantação e Suporte</p>
+                    <p class="text-xs text-gray-400 mb-3">nov de 2014 - mar de 2024 · 9 anos 5 meses</p>
+                    <ul class="text-sm text-gray-300 space-y-1.5 list-disc list-inside">
+                        <li>Implantação, configuração e parametrização de sistemas junto ao cliente.</li>
+                        <li>Treinamento e suporte aos usuários para garantir a correta utilização dos sistemas.</li>
+                        <li>Elaboração de relatórios das atividades executadas para monitoramento e indicadores.</li>
+                        <li>Homologação e atualização de sistemas dos clientes conforme critérios internos.</li>
+                        <li>Atuação em nível complexo com independência e supervisão técnica dos demais analistas.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-blue-800/30">
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Python</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">SQL</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Treinamento</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Suporte Técnico</span>
+                    </div>
+                </div>
+
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full md:col-span-2 md:w-1/2 md:mx-auto">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4">
+                            <i class="fas fa-building text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Prefeitura Municipal de Itapevi</h3>
+                            <span class="text-xs text-gray-400">7 anos 7 meses</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-blue-300 font-medium">Técnico do Executivo - Administração</p>
+                    <p class="text-xs text-gray-400 mb-3">jan de 2014 - nov de 2014 · 11 meses</p>
+                    <p class="text-sm text-gray-300 mb-3">Elaboração de documentos e gestão de Recursos Humanos em Unidade de Saúde.</p>
+                    <div class="space-y-1 text-xs text-gray-400 mt-2 pt-3 border-t border-blue-800/30">
+                        <p>▸ Suporte Técnico · out 2010 - jan 2014 · 3 anos 4 meses</p>
+                        <p>▸ Agente Administrativo · mai 2007 - out 2010 · 3 anos 6 meses</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-blue-800/30">
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Análise de Dados</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Suporte Técnico</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Infraestrutura</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formação Section -->
+    <section id="formacao" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">Formação</span>
+                <div class="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
+            </h2>
+            <div class="space-y-8 max-w-4xl mx-auto">
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg flex items-start">
+                    <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4 mt-1">
+                        <i class="fas fa-database text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg">Faculdade Metropolitana</h3>
+                        <p class="text-sm text-blue-300">Pós-graduação Lato Sensu, Ciência de Dados e Big Data Analytics</p>
+                        <p class="text-xs text-gray-400 mt-1">mai de 2021 – mai de 2022</p>
+                    </div>
+                </div>
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg flex items-start">
+                    <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4 mt-1">
+                        <i class="fas fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg">Centro Universitário FIEO</h3>
+                        <p class="text-sm text-blue-300">Bacharelado, Ciência da Computação</p>
+                        <p class="text-xs text-gray-400 mt-1">2007 – 2013</p>
+                        <p class="text-xs text-gray-400 mt-1">TCC voltado em desenvolvimento de aplicativos para tecnologia móvel.</p>
+                    </div>
+                </div>
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg flex items-start">
+                    <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4 mt-1">
+                        <i class="fas fa-server text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-lg">Impacta Tecnologia</h3>
+                        <p class="text-sm text-blue-300">Administrador de Banco de Dados, Banco de Dados</p>
+                        <p class="text-xs text-gray-400 mt-1">2010 – 2010</p>
+                        <p class="text-xs text-gray-400 mt-1">Atividades e grupos: Impacta Tecnologia, SQL Server</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -207,8 +419,8 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Projeto 1 -->
                 <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
-                    <div class="h-48 overflow-hidden">
-                        <img src="/api/placeholder/400/240" alt="Dashboard Financeiro" class="w-full h-full object-cover">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-indigo-700 flex items-center justify-center">
+                        <i class="fas fa-chart-pie text-6xl text-white/50"></i>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">Dashboard Financeiro</h3>
@@ -218,7 +430,7 @@
                             <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">SQL</span>
                             <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">DAX</span>
                         </div>
-                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                        <a href="https://github.com/edufms" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 flex items-center">
                             Ver detalhes
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -229,8 +441,8 @@
                 
                 <!-- Projeto 2 -->
                 <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
-                    <div class="h-48 overflow-hidden">
-                        <img src="/api/placeholder/400/240" alt="Análise Preditiva" class="w-full h-full object-cover">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl text-white/50"></i>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">Modelo Preditivo de Vendas</h3>
@@ -240,7 +452,7 @@
                             <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Scikit-learn</span>
                             <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Pandas</span>
                         </div>
-                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                        <a href="https://github.com/edufms" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 flex items-center">
                             Ver detalhes
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -251,8 +463,8 @@
                 
                 <!-- Projeto 3 -->
                 <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
-                    <div class="h-48 overflow-hidden">
-                        <img src="/api/placeholder/400/240" alt="Data Pipeline" class="w-full h-full object-cover">
+                    <div class="h-48 bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-6xl text-white/50"></i>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">ETL Automatizado</h3>
@@ -262,7 +474,7 @@
                             <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Airflow</span>
                             <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">PostgreSQL</span>
                         </div>
-                        <a href="#" class="text-blue-400 hover:text-blue-300 flex items-center">
+                        <a href="https://github.com/edufms" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 flex items-center">
                             Ver detalhes
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -292,12 +504,16 @@
                                     <i class="fas fa-envelope"></i>
                                 </div>
                                 <span>edufms@gmail.com</span>
+                                <button id="copyEmailBtn" class="ml-2 text-xs text-blue-400 hover:text-blue-300 transition-colors" title="Copiar e-mail">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                                <span id="copyMsg" class="text-xs text-green-400 ml-1 hidden">Copiado!</span>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center mr-3">
-                                    <i class="fas fa-phone"></i>
+                                    <i class="fab fa-whatsapp"></i>
                                 </div>
-                                <span>(11) 930XX-XX09</span>
+                                <a href="https://wa.me/5511930645909" target="_blank" rel="noopener noreferrer" class="hover:text-green-400 transition-colors">(11) 93064-5909</a>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center mr-3">
@@ -325,19 +541,21 @@
                     
                     <div>
                         <h3 class="text-xl font-bold mb-4">Envie uma Mensagem</h3>
-                        <form id="contactForm">
+                        <form id="contactForm" action="https://formspree.io/f/xbdnrayn" method="POST">
                             <div class="mb-4">
-                                <input type="text" placeholder="Seu nome" class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="text" name="nome" placeholder="Seu nome" required class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div class="mb-4">
-                                <input type="email" placeholder="Seu e-mail" class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="email" name="email" placeholder="Seu e-mail" required class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div class="mb-4">
-                                <textarea placeholder="Sua mensagem" rows="4" class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                                <textarea name="mensagem" placeholder="Sua mensagem" rows="4" required class="w-full bg-blue-900/40 border border-blue-700 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                             </div>
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium w-full">
-                                Enviar Mensagem
+                            <button type="submit" id="submitBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium w-full flex items-center justify-center">
+                                <span class="spinner" id="spinner"></span>
+                                <span id="submitText">Enviar Mensagem</span>
                             </button>
+                            <p id="formStatus" class="text-sm mt-4 px-4 py-2 rounded-md hidden"></p>
                         </form>
                     </div>
                 </div>
@@ -345,64 +563,179 @@
         </div>
     </section>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+       class="fixed bottom-6 left-6 bg-blue-700 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition transform hover:scale-110 z-50" aria-label="Voltar ao topo">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5511930645909" target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition transform hover:scale-110 z-50" aria-label="WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.52 3.48A11.91 11.91 0 0012.06 0C5.46 0 .08 5.38.08 11.98c0 2.11.55 4.17 1.6 5.98L0 24l6.2-1.62a11.94 11.94 0 005.86 1.5h.01c6.6 0 11.98-5.38 11.98-11.98 0-3.2-1.25-6.2-3.53-8.42zM12.07 21.5a9.46 9.46 0 01-4.82-1.33l-.35-.21-3.68.96.98-3.59-.23-.37a9.43 9.43 0 01-1.45-5.01c0-5.23 4.26-9.48 9.49-9.48 2.53 0 4.9.99 6.69 2.77a9.41 9.41 0 012.78 6.7c0 5.23-4.26 9.48-9.49 9.48zm5.2-7.07c-.28-.14-1.64-.81-1.9-.9-.26-.1-.45-.14-.64.14-.19.28-.73.9-.9 1.09-.16.19-.33.21-.61.07-.28-.14-1.18-.43-2.25-1.36-.83-.74-1.39-1.64-1.55-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.64-1.54-.88-2.11-.23-.55-.47-.47-.64-.48l-.55-.01c-.19 0-.5.07-.76.35-.26.28-1 .97-.97 2.44.02 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 5 4.39.7.3 1.25.48 1.68.62.71.23 1.36.2 1.87.12.57-.09 1.64-.67 1.87-1.31.23-.64.23-1.19.16-1.31-.07-.12-.26-.19-.54-.33z"/>
+        </svg>
+    </a>
+
     <!-- Footer -->
-    <footer class="bg-blue-900/80 py-8">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold mb-4">Eduardo<span class="text-blue-400">.dev</span></h2>
-            <p class="text-gray-300 mb-6">Analista de Dados | São Paulo, SP</p>
-            <div class="flex justify-center space-x-6 mb-6">
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
-                    <i class="fab fa-linkedin fa-lg"></i>
-                </a>
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
-                    <i class="fab fa-github fa-lg"></i>
-                </a>
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
-                    <i class="fab fa-twitter fa-lg"></i>
-                </a>
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors">
-                    <i class="fab fa-medium fa-lg"></i>
-                </a>
+    <footer class="bg-blue-900/80 pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Eduardo<span class="text-blue-400">.dev</span></h3>
+                    <p class="text-sm text-gray-400">Analista de Dados</p>
+                    <p class="text-sm text-gray-400">São Paulo, SP</p>
+                    <a href="#contato" class="text-sm text-blue-400 hover:text-blue-300 transition-colors mt-2 inline-block">Entre em contato</a>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Navegação</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#sobre" class="text-gray-400 hover:text-blue-300 transition-colors">Sobre</a></li>
+                        <li><a href="#experiencia" class="text-gray-400 hover:text-blue-300 transition-colors">Experiência</a></li>
+                        <li><a href="#formacao" class="text-gray-400 hover:text-blue-300 transition-colors">Formação</a></li>
+                        <li><a href="#habilidades" class="text-gray-400 hover:text-blue-300 transition-colors">Habilidades</a></li>
+                        <li><a href="#projetos" class="text-gray-400 hover:text-blue-300 transition-colors">Projetos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Redes Sociais</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://www.linkedin.com/in/eduardofmsantos/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors text-gray-300" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/edufms/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors text-gray-300" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://x.com/EduardoFmSantos" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors text-gray-300" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="text-sm text-blue-400 hover:text-blue-300 transition-colors mt-4 inline-block">
+                        ↑ Voltar ao topo
+                    </button>
+                </div>
             </div>
-            <p class="text-sm text-gray-400">&copy; 2026 Eduardo Machado. Todos os direitos reservados.</p>
+            <div class="border-t border-blue-800/30 pt-6 text-center">
+                <p class="text-sm text-gray-400">&copy; <span id="year"></span> Eduardo Machado. Todos os direitos reservados.</p>
+            </div>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Animação suave para rolagem de links internos
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Iniciar animação das barras de habilidade
-            const observer = new IntersectionObserver((entries) => {
+            const skillObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.querySelectorAll('.skill-bar').forEach(bar => {
-                            bar.style.width = bar.style.width;
+                            bar.style.width = bar.getAttribute('data-width') || bar.style.width;
                         });
                     }
                 });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.skill-bar').forEach(bar => {
+                bar.setAttribute('data-width', bar.style.width);
+                bar.style.width = '0';
             });
-            
-            observer.observe(document.querySelector('#habilidades'));
-            
-            // Manipulador de envio de formulário
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
+
+            const habilidades = document.querySelector('#habilidades');
+            if (habilidades) skillObserver.observe(habilidades);
+
+            function calcularIdade(dataNasc) {
+                const hoje = new Date();
+                const nasci = new Date(dataNasc);
+                let idade = hoje.getFullYear() - nasci.getFullYear();
+                const mes = hoje.getMonth() - nasci.getMonth();
+                if (mes < 0 || (mes === 0 && hoje.getDate() < nasci.getDate())) idade--;
+                return idade;
+            }
+
+            document.getElementById('hero-age').textContent = calcularIdade('1989-02-11');
+            document.getElementById('sobre-age').textContent = calcularIdade('1989-02-11');
+
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            const menuBtn = document.getElementById('menuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            function openMenu() { mobileMenu.classList.remove('hidden'); }
+            function closeMenu() { mobileMenu.classList.add('hidden'); }
+
+            menuBtn.addEventListener('click', openMenu);
+            closeMenuBtn.addEventListener('click', closeMenu);
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            document.getElementById('copyEmailBtn').addEventListener('click', async function() {
+                try {
+                    await navigator.clipboard.writeText('edufms@gmail.com');
+                    const msg = document.getElementById('copyMsg');
+                    msg.classList.remove('hidden');
+                    setTimeout(() => msg.classList.add('hidden'), 2000);
+                } catch {
+                    alert('Não foi possível copiar. Copie manualmente: edufms@gmail.com');
+                }
+            });
+
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                backToTop.classList.toggle('show', window.scrollY > 400);
+            });
+
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.card').forEach(el => {
+                el.classList.add('fade-in');
+                fadeObserver.observe(el);
+            });
+
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const spinner = document.getElementById('spinner');
+            const formStatus = document.getElementById('formStatus');
+
+            contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                alert('Obrigado por entrar em contato! Esta funcionalidade seria implementada com um backend real.');
+                submitBtn.disabled = true;
+                submitText.textContent = 'Enviando';
+                spinner.style.display = 'inline-block';
+                formStatus.classList.add('hidden');
+
+                try {
+                    const data = new FormData(contactForm);
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        formStatus.textContent = 'Mensagem enviada com sucesso!';
+                        formStatus.className = 'text-sm mt-4 px-4 py-2 rounded-md bg-green-600/30 text-green-300 border border-green-500/50';
+                        contactForm.reset();
+                    } else {
+                        formStatus.textContent = 'Erro ao enviar. Tente novamente.';
+                        formStatus.className = 'text-sm mt-4 px-4 py-2 rounded-md bg-red-600/30 text-red-300 border border-red-500/50';
+                    }
+                } catch {
+                    formStatus.textContent = 'Erro de conexão. Tente novamente.';
+                    formStatus.className = 'text-sm mt-4 px-4 py-2 rounded-md bg-red-600/30 text-red-300 border border-red-500/50';
+                }
+                formStatus.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitText.textContent = 'Enviar Mensagem';
+                spinner.style.display = 'none';
             });
         });
     </script>
