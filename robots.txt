@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /bingo.html
+Disallow: /equipamentos.html
+
+Sitemap: https://edufms.github.io/sitemap.xml

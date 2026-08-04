@@ -1,0 +1,16 @@
+{
+  "name": "Eduardo Machado | Analista de Dados",
+  "short_name": "Eduardo.dev",
+  "description": "Portfolio profissional de Eduardo Machado - Analista de Dados",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e40af",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -4,9 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const resultado = document.getElementById('resultado');
     const bolinha = document.getElementById('bolinha');
     const numeroSorteados = document.getElementById('numeroSorteados');
+    const totalNumeros = document.getElementById('totalNumeros');
     const ultimosSorteados = document.getElementById('ultimosSorteados');
+    const progressBar = document.getElementById('progressBar');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const toggleIcon = darkModeToggle.querySelector('.toggle-icon');
 
-    // Arrays para controlar os números de cada coluna
     const colunas = {
         'B': Array.from({ length: 15 }, (_, i) => i + 1),
         'I': Array.from({ length: 15 }, (_, i) => i + 16),
@@ -15,13 +18,32 @@ document.addEventListener('DOMContentLoaded', function () {
         'O': Array.from({ length: 15 }, (_, i) => i + 61)
     };
 
-    // Array para guardar os números já sorteados
+    const TOTAL_NUMEROS = Object.values(colunas).flat().length;
+    let numerosDisponiveis = Array.from({ length: TOTAL_NUMEROS }, (_, i) => i + 1);
     let numerosSorteados = [];
+    let sorteando = false;
 
-    // Inicializar cartela de bingo
-    inicializarCartela();
+    totalNumeros.textContent = TOTAL_NUMEROS;
 
-    // Função para inicializar a cartela com todos os números
+    function getColuna(numero) {
+        if (numero <= 15) return 'B';
+        if (numero <= 30) return 'I';
+        if (numero <= 45) return 'N';
+        if (numero <= 60) return 'G';
+        return 'O';
+    }
+
+    function inicializarUltimosSorteados() {
+        ultimosSorteados.innerHTML = '';
+        for (let i = 0; i < 3; i++) {
+            const el = document.createElement('div');
+            el.className = 'ultimo-numero';
+            el.style.visibility = 'hidden';
+            el.textContent = '-';
+            ultimosSorteados.appendChild(el);
+        }
+    }
+
     function inicializarCartela() {
         for (const coluna in colunas) {
             const colunaEl = document.getElementById(`coluna-${coluna.toLowerCase()}`);
@@ -37,140 +59,165 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Função para atualizar os últimos 3 números sorteados
     function atualizarUltimosSorteados() {
         const ultimosNumeros = numerosSorteados.slice(-3).reverse();
         const elementos = ultimosSorteados.querySelectorAll('.ultimo-numero');
 
-        // Resetar todos para invisíveis
         elementos.forEach(el => {
             el.style.visibility = 'hidden';
             el.textContent = '-';
         });
 
-        // Atualizar com os últimos números sorteados
         for (let i = 0; i < ultimosNumeros.length; i++) {
             const numero = ultimosNumeros[i];
-            const elemento = elementos[i];
-
-            // Determinar a coluna baseada no número
-            let coluna;
-            if (numero <= 15) coluna = 'B';
-            else if (numero <= 30) coluna = 'I';
-            else if (numero <= 45) coluna = 'N';
-            else if (numero <= 60) coluna = 'G';
-            else coluna = 'O';
-
-            elemento.textContent = `${coluna}-${numero}`;
-            elemento.style.visibility = 'visible';
+            const coluna = getColuna(numero);
+            elementos[i].textContent = `${coluna}-${numero}`;
+            elementos[i].style.visibility = 'visible';
         }
     }
 
-    // Evento de clique no botão de sortear
+    function atualizarProgresso() {
+        const pct = (numerosSorteados.length / TOTAL_NUMEROS) * 100;
+        progressBar.style.width = `${pct}%`;
+        progressBar.setAttribute('aria-valuenow', Math.round(pct));
+    }
+
+    function falar(texto) {
+        if ('speechSynthesis' in window) {
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = 'pt-BR';
+            speechSynthesis.speak(utterance);
+        }
+    }
+
+    function ativarModoEscuro() {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.setAttribute('aria-pressed', 'true');
+        toggleIcon.textContent = '🌙';
+    }
+
+    function desativarModoEscuro() {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.setAttribute('aria-pressed', 'false');
+        toggleIcon.textContent = '☀️';
+    }
+
+    function salvarPreferencia(valor) {
+        try {
+            localStorage.setItem('darkMode', valor);
+        } catch (_) {}
+    }
+
+    function carregarPreferencia() {
+        try {
+            return localStorage.getItem('darkMode');
+        } catch (_) {
+            return null;
+        }
+    }
+
+    inicializarUltimosSorteados();
+    inicializarCartela();
+    atualizarProgresso();
+
+    // Dark mode: OS preference or saved preference
+    const preferenciaSalva = carregarPreferencia();
+    if (preferenciaSalva === 'true') {
+        ativarModoEscuro();
+    } else if (preferenciaSalva === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        ativarModoEscuro();
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (carregarPreferencia() === null) {
+            if (e.matches) ativarModoEscuro();
+            else desativarModoEscuro();
+        }
+    });
+
+    darkModeToggle.addEventListener('click', function () {
+        const isDark = document.body.classList.toggle('dark-mode');
+        darkModeToggle.setAttribute('aria-pressed', isDark);
+        toggleIcon.textContent = isDark ? '🌙' : '☀️';
+        salvarPreferencia(isDark);
+    });
+
     btnSortear.addEventListener('click', function () {
-        if (numerosSorteados.length === 75) {
+        if (sorteando) return;
+        if (numerosSorteados.length === TOTAL_NUMEROS) {
             resultado.textContent = 'Todos os números já foram sorteados!';
             return;
         }
 
-        // Sortear um número ainda não sorteado
-        let numeroSorteado;
-        let coluna;
+        sorteando = true;
 
-        do {
-            numeroSorteado = Math.floor(Math.random() * 75) + 1;
+        const idx = Math.floor(Math.random() * numerosDisponiveis.length);
+        const numeroSorteado = numerosDisponiveis.splice(idx, 1)[0];
+        const coluna = getColuna(numeroSorteado);
 
-            // Determinar a coluna baseada no número
-            if (numeroSorteado <= 15) coluna = 'B';
-            else if (numeroSorteado <= 30) coluna = 'I';
-            else if (numeroSorteado <= 45) coluna = 'N';
-            else if (numeroSorteado <= 60) coluna = 'G';
-            else coluna = 'O';
-
-        } while (numerosSorteados.includes(numeroSorteado));
-
-        // Adicionar o número aos sorteados
         numerosSorteados.push(numeroSorteado);
 
-        // Atualizar a interface
-        var bolinha_sorteada = `Bolinha sorteada: ${coluna} - ${numeroSorteado}`;
-        falar(bolinha_sorteada);
-        resultado.textContent = `Bolinha sorteada: ${coluna} - ${numeroSorteado}`;
+        const textoBolinha = `Bolinha sorteada: ${coluna} - ${numeroSorteado}`;
+        falar(textoBolinha);
+        resultado.textContent = textoBolinha;
         bolinha.textContent = `${coluna}-${numeroSorteado}`;
         bolinha.style.display = 'inline-block';
+        bolinha.style.animation = 'none';
+        void bolinha.offsetHeight;
+        bolinha.style.animation = '';
 
-        // Atualizar os últimos 3 números sorteados
         atualizarUltimosSorteados();
 
-        // Marcar o número na cartela
         const numeroEl = document.getElementById(`numero-${numeroSorteado}`);
+        numeroEl.classList.remove('sorteado');
+        void numeroEl.offsetHeight;
         numeroEl.classList.add('sorteado');
 
-        // Atualizar contador
         numeroSorteados.textContent = numerosSorteados.length;
+        atualizarProgresso();
 
-        // Desabilitar botão se todos os números foram sorteados
-        if (numerosSorteados.length === 75) {
+        if (numerosSorteados.length === TOTAL_NUMEROS) {
             btnSortear.disabled = true;
         }
+
+        setTimeout(function () {
+            sorteando = false;
+        }, 300);
     });
 
-    // Evento de clique no botão de reiniciar
     btnReiniciar.addEventListener('click', function () {
-        // Limpar todos os números sorteados
+        if (numerosSorteados.length > 0 && !confirm('Tem certeza que deseja reiniciar o jogo?')) {
+            return;
+        }
+
+        numerosDisponiveis = Array.from({ length: TOTAL_NUMEROS }, (_, i) => i + 1);
         numerosSorteados = [];
 
-        // Reiniciar a interface
         resultado.textContent = 'Clique no botão para sortear';
         bolinha.style.display = 'none';
         numeroSorteados.textContent = '0';
+        atualizarProgresso();
 
-        // Limpar os últimos números sorteados
         ultimosSorteados.querySelectorAll('.ultimo-numero').forEach(el => {
             el.style.visibility = 'hidden';
             el.textContent = '-';
         });
 
-        // Remover classe sorteado de todos os números
         document.querySelectorAll('.numero').forEach(el => {
             el.classList.remove('sorteado');
         });
 
-        // Habilitar o botão de sortear
         btnSortear.disabled = false;
     });
 
-    // Implementação do modo noturno
-    const darkModeToggle = document.getElementById('darkModeToggle');
-
-    // Verificar se há uma preferência salva no localStorage
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        darkModeToggle.textContent = '🌙';
-    }
-
-    darkModeToggle.addEventListener('click', function () {
-        // Alternar a classe dark-mode no body
-        document.body.classList.toggle('dark-mode');
-
-        // Atualizar o ícone do botão
-        if (document.body.classList.contains('dark-mode')) {
-            darkModeToggle.textContent = '🌙';
-            localStorage.setItem('darkMode', 'true');
-        } else {
-            darkModeToggle.textContent = '☀️';
-            localStorage.setItem('darkMode', 'false');
+    document.addEventListener('keydown', function (e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+            if (document.activeElement === btnReiniciar) return;
+            if (document.activeElement !== btnSortear) {
+                e.preventDefault();
+                btnSortear.click();
+            }
         }
     });
 });
-
-function falar(texto) {
-    // Verifica se o navegador suporta a API de síntese de voz
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(texto);
-        utterance.lang = 'pt-BR';
-        speechSynthesis.speak(utterance);
-    } else {
-        alert("Desculpe, seu navegador não suporta a síntese de voz.");
-    }
-}

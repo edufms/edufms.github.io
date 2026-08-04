@@ -11,77 +11,21 @@
     <meta property="og:url" content="https://edufms.github.io">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/css/tailwind.min.css">
-    <style>
-        html { scroll-behavior: smooth; }
-        .bg-tech {
-            background-color: #0f172a;
-            background-image: radial-gradient(#64748b 0.5px, transparent 0.5px);
-            background-size: 15px 15px;
-        }
-        .skill-bar {
-            height: 10px;
-            background-color: #1e40af;
-            border-radius: 5px;
-            transition: width 1.5s ease-in-out;
-        }
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
-        }
-        .scroll-down {
-            animation: bounce-down 2s ease-in-out infinite;
-        }
-        @keyframes bounce-down {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(10px); opacity: 0.6; }
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        #backToTop {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #backToTop.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .spinner {
-            display: none;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            margin-right: 8px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); }         }
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        textarea:-webkit-autofill,
-        textarea:-webkit-autofill:hover,
-        textarea:-webkit-autofill:focus {
-            -webkit-text-fill-color: #fff;
-            -webkit-box-shadow: 0 0 0 1000px #1e3a5f inset;
-            transition: background-color 5000s ease-in-out 0s;
-        }
-    </style>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/tailwind.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e40af">
 </head>
 <body class="bg-tech text-gray-100">
+    <!-- Fundo animado -->
+    <div id="bg-layers" aria-hidden="true">
+        <div class="bg-anim"></div>
+        <div class="grid-lines"></div>
+        <div class="bg-glow"></div>
+        <canvas id="particles"></canvas>
+    </div>
     <!-- Header -->
     <header class="bg-blue-900/80 backdrop-blur-sm py-4 sticky top-0 z-10">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -102,15 +46,15 @@
                 </svg>
             </button>
         </div>
-        <div id="mobileMenu" class="fixed inset-0 bg-blue-900/95 backdrop-blur-md z-50 hidden md:hidden">
-            <div class="flex justify-end p-4">
+        <div id="mobileMenu" class="fixed inset-0 bg-blue-900/95 backdrop-blur-md z-50 hidden md:hidden flex flex-col">
+            <div class="flex justify-end p-4 shrink-0">
                 <button id="closeMenuBtn" class="text-white focus:outline-none" aria-label="Fechar menu">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
-            <nav class="flex flex-col items-center justify-center h-full -mt-16">
+            <nav class="flex-1 flex flex-col items-center justify-center">
                 <ul class="space-y-8 text-center">
                     <li><a href="#sobre" class="text-2xl text-white hover:text-blue-300 transition-colors">Sobre</a></li>
                     <li><a href="#experiencia" class="text-2xl text-white hover:text-blue-300 transition-colors">Experiência</a></li>
@@ -124,6 +68,8 @@
     </header>
 
     <!-- Hero Section -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-blue-600 focus:text-white focus:px-4 focus:py-2 focus:rounded">Pular para o conteúdo</a>
+    <main id="main-content">
     <section class="py-20 flex items-center min-h-screen bg-gradient-to-b from-blue-900/20 to-blue-900/5">
         <div class="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
             <div class="order-2 md:order-1">
@@ -133,8 +79,7 @@
                 </h2>
                 <h3 class="text-2xl text-blue-200 mb-6">Analista de Dados</h3>
                 <p class="text-gray-300 mb-8 text-lg">
-                    Transformando dados em insights valiosos e soluções de negócios.
-                    Especialista em SQL, Python, Power BI e visualização de dados.
+                    Mais de 15 anos de experiência em tecnologia, atuando na interseção entre desenvolvimento de sistemas, infraestrutura e análise de dados. Especialista em SQL, Python, Power BI e ETL, transformando dados brutos em insights estratégicos para apoio à tomada de decisão.
                 </p>
                 <div class="flex space-x-4">
                     <a href="#contato" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium">
@@ -148,7 +93,7 @@
             <div class="order-1 md:order-2 flex justify-center">
                 <div class="relative">
                     <div class="w-64 h-64 md:w-80 md:h-80 bg-blue-600 rounded-full overflow-hidden border-4 border-blue-300 shadow-lg shadow-blue-500/30">
-                        <img src="/media/photo.webp" alt="Eduardo Machado" class="w-full h-full object-cover">
+                        <img src="/media/00de0bf3-fde6-4206-b6ca-7d73d3b613a7.jpg" alt="Eduardo Machado" class="w-full h-full object-cover">
                     </div>
                     <div class="absolute -bottom-4 -right-4 bg-blue-900/90 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
                         <p class="font-bold">SP, Brasil</p>
@@ -195,8 +140,8 @@
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 mr-4 ring-2 ring-blue-400">
-                            <i class="fas fa-briefcase text-2xl"></i>
+                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 mr-4 ring-2 ring-blue-400 overflow-hidden">
+                            <img src="/media/maestro-bg.png" alt="Maestro Sistemas" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <h3 class="font-bold text-lg text-white">Maestro Sistemas</h3>
@@ -226,8 +171,8 @@
 
                 <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4">
-                            <i class="fas fa-laptop-code text-2xl"></i>
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4 overflow-hidden">
+                            <img src="/media/maestro-bg.png" alt="Maestro Sistemas" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <h3 class="font-bold text-lg text-white">Maestro Sistemas</h3>
@@ -236,6 +181,22 @@
                     </div>
                     <p class="text-sm text-blue-300 font-medium">Analista de Implantação e Suporte</p>
                     <p class="text-xs text-gray-400 mb-3">nov de 2014 - mar de 2024 · 9 anos 5 meses</p>
+                    <div class="flex justify-between items-center mb-4 p-4 bg-blue-800/20 rounded-lg">
+                        <div class="text-center flex-1">
+                            <p class="text-2xl font-bold text-blue-300">+20</p>
+                            <p class="text-xs text-gray-400 mt-1">Prefeituras em SP</p>
+                        </div>
+                        <div class="w-px h-10 bg-blue-700/50 mx-3"></div>
+                        <div class="text-center flex-1">
+                            <p class="text-2xl font-bold text-blue-300">+1 Milhão</p>
+                            <p class="text-xs text-gray-400 mt-1">População atendida</p>
+                        </div>
+                        <div class="w-px h-10 bg-blue-700/50 mx-3"></div>
+                        <div class="text-center flex-1">
+                            <p class="text-2xl font-bold text-blue-300">+4.000</p>
+                            <p class="text-xs text-gray-400 mt-1">Operadores treinados</p>
+                        </div>
+                    </div>
                     <ul class="text-sm text-gray-300 space-y-1.5 list-disc list-inside">
                         <li>Implantação, configuração e parametrização de sistemas junto ao cliente.</li>
                         <li>Treinamento e suporte aos usuários para garantir a correta utilização dos sistemas.</li>
@@ -251,6 +212,56 @@
                     </div>
                 </div>
 
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4">
+                            <i class="fas fa-building text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Prefeitura Municipal de Itapevi</h3>
+                            <span class="text-xs text-gray-400">Tempo integral</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-blue-300 font-medium">Técnico do Executivo - Administração</p>
+                    <p class="text-xs text-gray-400 mb-3">jan de 2014 - nov de 2014 · 11 meses</p>
+                    <ul class="text-sm text-gray-300 space-y-1.5 list-disc list-inside">
+                        <li>Elaboração e controle de documentação administrativa e gestão de Recursos Humanos em Unidade de Saúde.</li>
+                        <li>Organização e separação de guias de consultas e exames para encaminhamento de pacientes.</li>
+                        <li>Resolução de conflitos e atendimento direto a pacientes, garantindo a qualidade do serviço prestado.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-blue-800/30">
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Gestão de Pessoas</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Documentação</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Atendimento</span>
+                    </div>
+                </div>
+
+                <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4">
+                            <i class="fas fa-building text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-white">Prefeitura Municipal de Itapevi</h3>
+                            <span class="text-xs text-gray-400">Tempo integral</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-blue-300 font-medium">Suporte Técnico</p>
+                    <p class="text-xs text-gray-400 mb-3">out de 2010 - jan de 2014 · 3 anos 4 meses</p>
+                    <ul class="text-sm text-gray-300 space-y-1.5 list-disc list-inside">
+                        <li>Supervisão e manutenção de hardware e software em estações de trabalho.</li>
+                        <li>Suporte e configuração de sistemas internos utilizados pela administração pública.</li>
+                        <li>Gerenciamento de infraestrutura de rede, servidores e conectividade.</li>
+                        <li>Desenvolvimento de aplicações internas em Java e Access com banco de dados MySQL para os departamentos.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-blue-800/30">
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Suporte Técnico</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Java</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">MySQL</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Infraestrutura</span>
+                    </div>
+                </div>
+
                 <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg h-full md:col-span-2 md:w-1/2 md:mx-auto">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-lg bg-blue-700 flex items-center justify-center shrink-0 mr-4">
@@ -258,20 +269,20 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-lg text-white">Prefeitura Municipal de Itapevi</h3>
-                            <span class="text-xs text-gray-400">7 anos 7 meses</span>
+                            <span class="text-xs text-gray-400">Tempo integral</span>
                         </div>
                     </div>
-                    <p class="text-sm text-blue-300 font-medium">Técnico do Executivo - Administração</p>
-                    <p class="text-xs text-gray-400 mb-3">jan de 2014 - nov de 2014 · 11 meses</p>
-                    <p class="text-sm text-gray-300 mb-3">Elaboração de documentos e gestão de Recursos Humanos em Unidade de Saúde.</p>
-                    <div class="space-y-1 text-xs text-gray-400 mt-2 pt-3 border-t border-blue-800/30">
-                        <p>▸ Suporte Técnico · out 2010 - jan 2014 · 3 anos 4 meses</p>
-                        <p>▸ Agente Administrativo · mai 2007 - out 2010 · 3 anos 6 meses</p>
-                    </div>
+                    <p class="text-sm text-blue-300 font-medium">Agente Administrativo</p>
+                    <p class="text-xs text-gray-400 mb-3">mai de 2007 - out de 2010 · 3 anos 6 meses</p>
+                    <ul class="text-sm text-gray-300 space-y-1.5 list-disc list-inside">
+                        <li>Gestão e acompanhamento de contratos administrativos com prestadores de serviço.</li>
+                        <li>Coordenação de processos de compras e solicitações de materiais para os setores.</li>
+                        <li>Controle e organização de documentação administrativa e tramitação de processos.</li>
+                    </ul>
                     <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-blue-800/30">
-                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Análise de Dados</span>
-                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Suporte Técnico</span>
-                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Infraestrutura</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Administrativo</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Contratos</span>
+                        <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Compras</span>
                     </div>
                 </div>
             </div>
@@ -304,7 +315,7 @@
                         <h3 class="font-bold text-lg">Centro Universitário FIEO</h3>
                         <p class="text-sm text-blue-300">Bacharelado, Ciência da Computação</p>
                         <p class="text-xs text-gray-400 mt-1">2007 – 2013</p>
-                        <p class="text-xs text-gray-400 mt-1">TCC voltado em desenvolvimento de aplicativos para tecnologia móvel.</p>
+                        <p class="text-xs text-gray-400 mt-1">TCC: Sistema de Gerenciamento de Tarefas por Geolocalização — aplicativo móvel desenvolvido com Eclipse e Android SDK, que permite criar listas de tarefas associadas a locais no mapa, notificando o usuário ao atingir um raio de proximidade configurável.</p>
                     </div>
                 </div>
                 <div class="card bg-blue-900/30 rounded-xl p-6 backdrop-blur-sm border border-blue-800/50 shadow-lg flex items-start">
@@ -536,13 +547,13 @@
                         <div class="mt-6">
                             <h3 class="text-xl font-bold mb-3">Redes Sociais</h3>
                             <div class="flex space-x-3">
-                                <a href="https://www.linkedin.com/in/eduardofmsantos/" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                <a href="https://www.linkedin.com/in/eduardofmsantos/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="LinkedIn">
                                     <i class="fab fa-linkedin-in"></i>
                                 </a>
-                                <a href="http://github.com/edufms/" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                <a href="https://github.com/edufms/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="GitHub">
                                     <i class="fab fa-github"></i>
                                 </a>
-                                <a href="https://x.com/EduardoFmSantos" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                <a href="https://x.com/EduardoFmSantos" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="Twitter">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             </div>
@@ -553,13 +564,16 @@
                         <h3 class="text-xl font-bold mb-4">Envie uma Mensagem</h3>
                         <form id="contactForm" action="https://formspree.io/f/xbdnrayn" method="POST">
                             <div class="mb-4">
-                                <input type="text" name="nome" placeholder="Seu nome" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
+                                <label for="contact-name" class="sr-only">Seu nome</label>
+                                <input type="text" id="contact-name" name="nome" placeholder="Seu nome" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
                             </div>
                             <div class="mb-4">
-                                <input type="email" name="email" placeholder="Seu e-mail" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
+                                <label for="contact-email" class="sr-only">Seu e-mail</label>
+                                <input type="email" id="contact-email" name="email" placeholder="Seu e-mail" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
                             </div>
                             <div class="mb-4">
-                                <textarea name="mensagem" placeholder="Sua mensagem" rows="4" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400"></textarea>
+                                <label for="contact-message" class="sr-only">Sua mensagem</label>
+                                <textarea id="contact-message" name="mensagem" placeholder="Sua mensagem" rows="4" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400"></textarea>
                             </div>
                             <button type="submit" id="submitBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium w-full flex items-center justify-center">
                                 <span class="spinner" id="spinner"></span>
@@ -572,6 +586,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Back to Top Button -->
     <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
@@ -633,121 +648,6 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const skillObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.querySelectorAll('.skill-bar').forEach(bar => {
-                            bar.style.width = bar.getAttribute('data-width') || bar.style.width;
-                        });
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            document.querySelectorAll('.skill-bar').forEach(bar => {
-                bar.setAttribute('data-width', bar.style.width);
-                bar.style.width = '0';
-            });
-
-            const habilidades = document.querySelector('#habilidades');
-            if (habilidades) skillObserver.observe(habilidades);
-
-            function calcularIdade(dataNasc) {
-                const hoje = new Date();
-                const nasci = new Date(dataNasc);
-                let idade = hoje.getFullYear() - nasci.getFullYear();
-                const mes = hoje.getMonth() - nasci.getMonth();
-                if (mes < 0 || (mes === 0 && hoje.getDate() < nasci.getDate())) idade--;
-                return idade;
-            }
-
-            document.getElementById('hero-age').textContent = calcularIdade('1989-02-11');
-            document.getElementById('sobre-age').textContent = calcularIdade('1989-02-11');
-
-            document.getElementById('year').textContent = new Date().getFullYear();
-
-            const menuBtn = document.getElementById('menuBtn');
-            const closeMenuBtn = document.getElementById('closeMenuBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
-
-            function openMenu() { mobileMenu.classList.remove('hidden'); }
-            function closeMenu() { mobileMenu.classList.add('hidden'); }
-
-            menuBtn.addEventListener('click', openMenu);
-            closeMenuBtn.addEventListener('click', closeMenu);
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-
-            document.getElementById('copyEmailBtn').addEventListener('click', async function() {
-                try {
-                    await navigator.clipboard.writeText('edufms@gmail.com');
-                    const msg = document.getElementById('copyMsg');
-                    msg.classList.remove('hidden');
-                    setTimeout(() => msg.classList.add('hidden'), 2000);
-                } catch {
-                    alert('Não foi possível copiar. Copie manualmente: edufms@gmail.com');
-                }
-            });
-
-            const backToTop = document.getElementById('backToTop');
-            window.addEventListener('scroll', function() {
-                backToTop.classList.toggle('show', window.scrollY > 400);
-            });
-
-            const fadeObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('show');
-                        fadeObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.card').forEach(el => {
-                el.classList.add('fade-in');
-                fadeObserver.observe(el);
-            });
-
-            const contactForm = document.getElementById('contactForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const spinner = document.getElementById('spinner');
-            const formStatus = document.getElementById('formStatus');
-
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                submitBtn.disabled = true;
-                submitText.textContent = 'Enviando';
-                spinner.style.display = 'inline-block';
-                formStatus.classList.add('hidden');
-
-                try {
-                    const data = new FormData(contactForm);
-                    const response = await fetch(contactForm.action, {
-                        method: 'POST',
-                        body: data,
-                        headers: { 'Accept': 'application/json' }
-                    });
-                    if (response.ok) {
-                        formStatus.textContent = 'Mensagem enviada com sucesso!';
-                        formStatus.className = 'text-sm mt-4 px-4 py-2 rounded-md bg-green-600/30 text-green-300 border border-green-500/50';
-                        contactForm.reset();
-                    } else {
-                        formStatus.textContent = 'Erro ao enviar. Tente novamente.';
-                        formStatus.className = 'text-sm mt-4 px-4 py-2 rounded-md bg-red-600/30 text-red-300 border border-red-500/50';
-                    }
-                } catch {
-                    formStatus.textContent = 'Erro de conexão. Tente novamente.';
-                    formStatus.className = 'text-sm mt-4 px-4 py-2 rounded-md bg-red-600/30 text-red-300 border border-red-500/50';
-                }
-                formStatus.classList.remove('hidden');
-                submitBtn.disabled = false;
-                submitText.textContent = 'Enviar Mensagem';
-                spinner.style.display = 'none';
-            });
-        });
-    </script>
+    <script src="scripts/main.js" defer></script>
 </body>
 </html>

@@ -5,35 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sorteio de Bingo</title>
-    <link rel="stylesheet" href="/css/bingo.css">
-    <script src="/scripts/bingo.js" defer></script>
+    <meta name="description" content="Aplicativo de sorteio de números de Bingo com modo escuro e síntese de voz.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="css/bingo.css">
+    <script src="scripts/bingo.js" defer></script>
 </head>
 
 <body>
-    <button id="darkModeToggle" class="dark-mode-toggle" title="Alternar modo noturno">☀️</button>
-    <div class="container">
+    <noscript>JavaScript é necessário para o funcionamento do Bingo.</noscript>
+
+    <button id="darkModeToggle" class="dark-mode-toggle"
+            aria-label="Alternar modo noturno"
+            aria-pressed="false"
+            title="Alternar modo noturno">
+        <span aria-hidden="true" class="toggle-icon">☀️</span>
+    </button>
+
+    <main class="container">
         <h1>Sorteio de Bingo</h1>
 
-        <div class="sorteio">
-            <button id="btnSortear" class="btn-sortear">Sortear Número</button>
+        <section class="sorteio" aria-label="Área de sorteio">
+            <button id="btnSortear" class="btn-sortear" title="Sortear número (Espaço ou Enter)">Sortear Número</button>
             <div id="resultado" class="resultado">Clique no botão para sortear</div>
             <div id="bolinha" class="bolinha" style="display:none;"></div>
+        </section>
+
+        <div class="contador" aria-live="polite">
+            <span id="numeroSorteados">0</span> números sorteados de <span id="totalNumeros"></span>
         </div>
 
-        <div class="contador">
-            <span id="numeroSorteados">0</span> números sorteados de 75
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
 
-        <div class="ultimos-sorteados">
+        <section class="ultimos-sorteados" aria-label="Últimos números sorteados">
             <div>Últimos números sorteados:</div>
-            <div class="ultimos-numeros" id="ultimosSorteados">
-                <div class="ultimo-numero" style="visibility: hidden;">-</div>
-                <div class="ultimo-numero" style="visibility: hidden;">-</div>
-                <div class="ultimo-numero" style="visibility: hidden;">-</div>
-            </div>
-        </div>
+            <div class="ultimos-numeros" id="ultimosSorteados"></div>
+        </section>
 
-        <div class="historico">
+        <section class="historico" aria-label="Cartela de bingo">
             <h2>Cartela de Bingo</h2>
             <div class="tabela-bingo">
                 <div class="coluna">
@@ -58,11 +68,11 @@
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
+            <div class="reiniciar-container">
                 <button id="btnReiniciar" class="reiniciar">Reiniciar Jogo</button>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </body>
 
 </html>

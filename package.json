@@ -1,0 +1,14 @@
+{
+  "name": "landingpage-eduardo",
+  "version": "1.0.0",
+  "description": "Portfolio profissional de Eduardo Machado - Analista de Dados",
+  "scripts": {
+    "dev": "tailwindcss -i ./css/tailwind-input.css -o ./css/tailwind.min.css --watch",
+    "build": "tailwindcss -i ./css/tailwind-input.css -o ./css/tailwind.min.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0"
+  }
+}
