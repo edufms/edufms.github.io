@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Dashboard | Eduardo Machado</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>Crypto Dashboard</h1>
+            <p>Dados em tempo real via CoinGecko API</p>
+            <span class="auto-refresh">Atualização automática a cada 60s</span>
+        </header>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <span>Carregando dados do mercado...</span>
+        </div>
+
+        <section class="metrics">
+            <div class="metric-card">
+                <h3>Market Cap Total</h3>
+                <p id="metricTotal">-</p>
+            </div>
+            <div class="metric-card">
+                <h3>Volume 24h</h3>
+                <p id="metricAvg">-</p>
+            </div>
+            <div class="metric-card">
+                <h3>Variação 24h</h3>
+                <p id="metricChange">-</p>
+            </div>
+        </section>
+
+        <section class="charts">
+            <div class="chart-container">
+                <h3>Top 8 - Preços (BRL)</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Histórico 7 Dias</h3>
+                <div class="chart-header">
+                    <select id="coinSelect"></select>
+                </div>
+                <span id="lineChartLoading" class="loading-text"></span>
+                <canvas id="lineChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Market Share (Top 5)</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <h2>Top 10 Criptomoedas</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Moeda</th>
+                            <th>Símbolo</th>
+                            <th>Preço (BRL)</th>
+                            <th>24h</th>
+                            <th>Market Cap</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cryptoTable">
+                        <tr><td colspan="5" class="loading-text">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Dados: <a href="https://www.coingecko.com/" target="_blank">CoinGecko API</a> | Atualizado em tempo real</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

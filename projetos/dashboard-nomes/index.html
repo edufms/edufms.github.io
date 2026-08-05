@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomes no Brasil | IBGE Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>Nomes no Brasil</h1>
+            <p>Dados do IBGE - Censo 2010</p>
+        </header>
+
+        <!-- Seção: Buscar por Nome -->
+        <section class="search-section">
+            <h2>Buscar por Nome</h2>
+            <div class="search-group">
+                <input type="text" id="nameInput" placeholder="Digite um nome (ex: Maria, João)" value="Maria">
+                <select id="stateSelect">
+                    <option value="">Todos os estados</option>
+                    <option value="11">Rondônia</option>
+                    <option value="12">Acre</option>
+                    <option value="13">Amazonas</option>
+                    <option value="14">Roraima</option>
+                    <option value="15">Pará</option>
+                    <option value="16">Amapá</option>
+                    <option value="17">Tocantins</option>
+                    <option value="21">Maranhão</option>
+                    <option value="22">Piauí</option>
+                    <option value="23">Ceará</option>
+                    <option value="24">Rio Grande do Norte</option>
+                    <option value="25">Paraíba</option>
+                    <option value="26">Pernambuco</option>
+                    <option value="27">Alagoas</option>
+                    <option value="28">Sergipe</option>
+                    <option value="29">Bahia</option>
+                    <option value="31">Minas Gerais</option>
+                    <option value="32">Espírito Santo</option>
+                    <option value="33">Rio de Janeiro</option>
+                    <option value="35" selected>São Paulo</option>
+                    <option value="41">Paraná</option>
+                    <option value="42">Santa Catarina</option>
+                    <option value="43">Rio Grande do Sul</option>
+                    <option value="50">Mato Grosso do Sul</option>
+                    <option value="51">Mato Grosso</option>
+                    <option value="52">Goiás</option>
+                    <option value="53">Distrito Federal</option>
+                </select>
+                <select id="genderSelect">
+                    <option value="">Todos</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+                <button id="searchBtn">Buscar</button>
+            </div>
+        </section>
+
+        <!-- Métricas do nome -->
+        <section class="metrics" id="nameMetrics">
+            <div class="metric-card">
+                <h3>Total Registrados</h3>
+                <p id="metricTotal">-</p>
+            </div>
+            <div class="metric-card">
+                <h3>Década mais Popular</h3>
+                <p id="metricDecade">-</p>
+            </div>
+            <div class="metric-card">
+                <h3>Pico</h3>
+                <p id="metricPeak">-</p>
+            </div>
+        </section>
+
+        <!-- Gráficos -->
+        <section class="charts">
+            <div class="chart-container large">
+                <h3>Evolução por Década</h3>
+                <canvas id="evolutionChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Proporção por Sexo</h3>
+                <canvas id="genderChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Distribuição por Sexo (Barras)</h3>
+                <canvas id="genderBarChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Seção: Ranking -->
+        <section class="ranking-section">
+            <h2>Ranking de Nomes</h2>
+            <div class="ranking-filters">
+                <select id="rankingDecade">
+                    <option value="2000">2000</option>
+                    <option value="1990" selected>1990</option>
+                    <option value="1980">1980</option>
+                    <option value="1970">1970</option>
+                    <option value="1960">1960</option>
+                    <option value="1950">1950</option>
+                </select>
+                <select id="rankingState">
+                    <option value="">Todos os estados</option>
+                    <option value="35" selected>São Paulo</option>
+                    <option value="33">Rio de Janeiro</option>
+                    <option value="31">Minas Gerais</option>
+                    <option value="29">Bahia</option>
+                    <option value="41">Paraná</option>
+                    <option value="43">Rio Grande do Sul</option>
+                </select>
+                <select id="rankingGender">
+                    <option value="">Todos</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+                <button id="rankingBtn">Buscar Ranking</button>
+            </div>
+        </section>
+
+        <section class="charts">
+            <div class="chart-container large">
+                <h3>Top 10 Nomes</h3>
+                <canvas id="rankingChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Distribuição do Ranking</h3>
+                <canvas id="rankingPieChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Tabela do Ranking -->
+        <section class="table-section" id="rankingTableSection" style="display:none;">
+            <h2>Ranking Completo</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Frequência</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Dados: <a href="https://servicodados.ibge.gov.br/api/docs/nomes" target="_blank">API Nomes - IBGE</a></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
