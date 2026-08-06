@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       function draw() {
+        if (document.hidden) {
+          requestAnimationFrame(draw);
+          return;
+        }
         ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
         particles.forEach(function (p) {
           p.x += p.vx;
@@ -146,11 +150,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Back to top
+  // Back to top (debounced)
   var backToTop = document.getElementById('backToTop');
   if (backToTop) {
+    var scrollTimer = null;
     window.addEventListener('scroll', function () {
-      backToTop.classList.toggle('show', window.scrollY > 400);
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        backToTop.classList.toggle('show', window.scrollY > 400);
+      }, 100);
     });
   }
 
@@ -168,6 +176,27 @@ document.addEventListener('DOMContentLoaded', function () {
     el.classList.add('fade-in');
     fadeObserver.observe(el);
   });
+
+  // Active nav link (aria-current)
+  var navLinks = document.querySelectorAll('nav a[href^="#"]');
+  var sections = [];
+  navLinks.forEach(function (link) {
+    var id = link.getAttribute('href').slice(1);
+    var section = document.getElementById(id);
+    if (section) sections.push({ el: section, link: link });
+  });
+  if (sections.length) {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (l) { l.removeAttribute('aria-current'); });
+          var match = sections.find(function (s) { return s.el === entry.target; });
+          if (match) match.link.setAttribute('aria-current', 'page');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(function (s) { navObserver.observe(s.el); });
+  }
 
   // Contact form
   var contactForm = document.getElementById('contactForm');

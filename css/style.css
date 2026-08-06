@@ -159,3 +159,17 @@ textarea:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 1000px #1e3a5f inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-anim, .grid-lines, .bg-glow, .scroll-down {
+    animation: none !important;
+  }
+  .fade-in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .card {
+    transition: none !important;
+  }
+}
