@@ -119,6 +119,48 @@ document.addEventListener('DOMContentLoaded', function () {
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // Typewriter effect
+  var typedEl = document.getElementById('typed');
+  if (typedEl) {
+    var titles = ['Analista de Dados', 'Analista de BI', 'Especialista em SQL & Python', 'Entusiasta de Dados'];
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      typedEl.textContent = titles[0];
+    } else {
+      var ti = 0, ci = 0, deleting = false;
+      function typeLoop() {
+        var word = titles[ti];
+        typedEl.textContent = word.substring(0, ci);
+        if (!deleting && ci < word.length) {
+          ci++;
+          setTimeout(typeLoop, 80);
+        } else if (!deleting) {
+          deleting = true;
+          setTimeout(typeLoop, 1800);
+        } else if (ci > 0) {
+          ci--;
+          setTimeout(typeLoop, 40);
+        } else {
+          deleting = false;
+          ti = (ti + 1) % titles.length;
+          setTimeout(typeLoop, 300);
+        }
+      }
+      typeLoop();
+    }
+  }
+
+  // Reading progress bar
+  var progressBar = document.getElementById('readingProgressBar');
+  if (progressBar) {
+    function updateProgress() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  }
+
   // Animated counters
   var counters = document.querySelectorAll('.counter');
   if (counters.length) {

@@ -1,5 +1,26 @@
 html { scroll-behavior: smooth; }
 
+:focus-visible {
+  outline: 3px solid #60a5fa !important;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.typed-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  background-color: #60a5fa;
+  vertical-align: text-bottom;
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -182,6 +203,9 @@ textarea:-webkit-autofill:focus {
 
 @media (prefers-reduced-motion: reduce) {
   .bg-anim, .grid-lines, .bg-glow, .scroll-down {
+    animation: none !important;
+  }
+  .typed-cursor {
     animation: none !important;
   }
   .fade-in {
