@@ -119,19 +119,61 @@ document.addEventListener('DOMContentLoaded', function () {
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // Animated counters
+  var counters = document.querySelectorAll('.counter');
+  if (counters.length) {
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var counterObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        var suffix = el.getAttribute('data-suffix') || '';
+        if (reduced) {
+          el.textContent = target.toLocaleString('pt-BR') + suffix;
+          counterObserver.unobserve(el);
+          return;
+        }
+        var start = null;
+        function step(ts) {
+          if (!start) start = ts;
+          var progress = Math.min((ts - start) / 1500, 1);
+          el.textContent = Math.floor(progress * target).toLocaleString('pt-BR') + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (c) { counterObserver.observe(c); });
+  }
+
   // Mobile menu
   var menuBtn = document.getElementById('menuBtn');
   var closeMenuBtn = document.getElementById('closeMenuBtn');
   var mobileMenu = document.getElementById('mobileMenu');
 
-  function openMenu() { mobileMenu.classList.remove('hidden'); }
-  function closeMenu() { mobileMenu.classList.add('hidden'); }
+  function openMenu() {
+    mobileMenu.classList.remove('hidden');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    closeMenuBtn.focus();
+  }
+  function closeMenu() {
+    mobileMenu.classList.add('hidden');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    menuBtn.focus();
+  }
 
   if (menuBtn) menuBtn.addEventListener('click', openMenu);
   if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
   if (mobileMenu) {
     mobileMenu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
     });
   }
 

@@ -63,7 +63,7 @@
                     <li><a href="#contato" class="hover:text-blue-300 transition-colors">Contato</a></li>
                 </ul>
             </nav>
-            <button id="menuBtn" class="md:hidden text-white focus:outline-none" aria-label="Abrir menu">
+            <button id="menuBtn" class="md:hidden text-white focus:outline-none" aria-label="Abrir menu" aria-controls="mobileMenu" aria-expanded="false">
                 <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -104,12 +104,15 @@
                 <p class="text-gray-300 mb-8 text-lg">
                     Mais de 15 anos de experiência em tecnologia, atuando na interseção entre desenvolvimento de sistemas, infraestrutura e análise de dados. Especialista em SQL, Python, Power BI e ETL, transformando dados brutos em insights estratégicos para apoio à tomada de decisão.
                 </p>
-                <div class="flex space-x-4">
+                <div class="flex flex-wrap gap-4">
                     <a href="#contato" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors font-medium">
                         Entre em contato
                     </a>
                     <a href="#habilidades" class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-md transition-colors font-medium">
                         Minhas habilidades
+                    </a>
+                    <a href="media/curriculo.pdf" download class="border border-gray-500 text-gray-300 hover:bg-gray-500/10 hover:text-white px-6 py-3 rounded-md transition-colors font-medium">
+                        <i class="fas fa-download mr-2"></i>Baixar CV
                     </a>
                 </div>
             </div>
@@ -129,6 +132,30 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
+        </div>
+    </section>
+
+    <!-- Estatísticas Section -->
+    <section id="numeros" class="py-16 bg-blue-900/10" aria-label="Números e conquistas">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
+                <div>
+                    <p class="text-4xl md:text-5xl font-bold text-blue-300"><span class="counter" data-target="15">0</span>+</p>
+                    <p class="text-sm text-gray-400 mt-2">Anos de experiência</p>
+                </div>
+                <div>
+                    <p class="text-4xl md:text-5xl font-bold text-blue-300"><span class="counter" data-target="20">0</span>+</p>
+                    <p class="text-sm text-gray-400 mt-2">Prefeituras atendidas</p>
+                </div>
+                <div>
+                    <p class="text-4xl md:text-5xl font-bold text-blue-300"><span class="counter" data-target="1" data-suffix="M+">0</span></p>
+                    <p class="text-sm text-gray-400 mt-2">População impactada</p>
+                </div>
+                <div>
+                    <p class="text-4xl md:text-5xl font-bold text-blue-300"><span class="counter" data-target="4000">0</span>+</p>
+                    <p class="text-sm text-gray-400 mt-2">Operadores treinados</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -560,6 +587,72 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- Projeto 4 -->
+                <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
+                    <div class="h-48 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                        <i class="fas fa-coins text-6xl text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Crypto Dashboard</h3>
+                        <p class="text-gray-300 mb-4">Dashboard de criptomoedas com dados em tempo real via API CoinGecko, gráficos de preços, market share e ranking do mercado.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">JavaScript</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Chart.js</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">API</span>
+                        </div>
+                        <a href="projetos/dashboard/" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            Ver demo ao vivo
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Projeto 5 -->
+                <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
+                    <div class="h-48 bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center">
+                        <i class="fas fa-users text-6xl text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Nomes no Brasil</h3>
+                        <p class="text-gray-300 mb-4">Dashboard interativo com dados do IBGE (Censo 2010) para explorar a frequência de nomes por década, estado e sexo.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">JavaScript</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">Chart.js</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">API IBGE</span>
+                        </div>
+                        <a href="projetos/dashboard-nomes/" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            Ver demo ao vivo
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Projeto 6 -->
+                <div class="card bg-blue-900/30 rounded-xl overflow-hidden border border-blue-800/50 shadow-lg">
+                    <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
+                        <i class="fas fa-dice text-6xl text-white/50"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Sorteio de Bingo</h3>
+                        <p class="text-gray-300 mb-4">Aplicativo de sorteio de Bingo com modo escuro, síntese de voz e cartela interativa para eventos.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">JavaScript</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">HTML5</span>
+                            <span class="bg-blue-600/30 text-blue-200 text-xs px-2 py-1 rounded">CSS</span>
+                        </div>
+                        <a href="bingo.html" class="text-blue-400 hover:text-blue-300 flex items-center">
+                            Ver demo ao vivo
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -611,7 +704,7 @@
                                     <i class="fab fa-github"></i>
                                 </a>
                                 <a href="https://x.com/EduardoFmSantos" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="Twitter">
-                                    <i class="fab fa-twitter"></i>
+                                    <i class="fab fa-x-twitter"></i>
                                 </a>
                             </div>
                         </div>
@@ -620,13 +713,18 @@
                     <div>
                         <h3 class="text-xl font-bold mb-4">Envie uma Mensagem</h3>
                         <form id="contactForm" action="https://formspree.io/f/xbdnrayn" method="POST">
+                            <div class="hidden" aria-hidden="true">
+                                <label>Não preencha este campo
+                                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+                                </label>
+                            </div>
                             <div class="mb-4">
                                 <label for="contact-name" class="sr-only">Seu nome</label>
-                                <input type="text" id="contact-name" name="nome" placeholder="Seu nome" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
+                                <input type="text" id="contact-name" name="nome" placeholder="Seu nome" autocomplete="name" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
                             </div>
                             <div class="mb-4">
                                 <label for="contact-email" class="sr-only">Seu e-mail</label>
-                                <input type="email" id="contact-email" name="email" placeholder="Seu e-mail" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
+                                <input type="email" id="contact-email" name="email" placeholder="Seu e-mail" autocomplete="email" required class="w-full bg-blue-900/80 border border-blue-700 rounded-md px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400">
                             </div>
                             <div class="mb-4">
                                 <label for="contact-message" class="sr-only">Sua mensagem</label>
@@ -691,7 +789,7 @@
                             <i class="fab fa-github"></i>
                         </a>
                         <a href="https://x.com/EduardoFmSantos" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center hover:bg-blue-600 transition-colors text-gray-300" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
+                            <i class="fab fa-x-twitter"></i>
                         </a>
                     </div>
                     <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="text-sm text-blue-400 hover:text-blue-300 transition-colors mt-4 inline-block">

@@ -105,6 +105,26 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
 }
 
+nav a[aria-current="page"] {
+  color: #93c5fd;
+}
+
+@media (min-width: 768px) {
+  nav a[aria-current="page"] {
+    position: relative;
+  }
+  nav a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background-color: #60a5fa;
+    border-radius: 1px;
+  }
+}
+
 .scroll-down {
   animation: bounce-down 2s ease-in-out infinite;
 }
