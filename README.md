@@ -8,6 +8,7 @@ Portfolio profissional de Eduardo Machado, Analista de Dados.
 - Tailwind CSS v3
 - Formspree (formulário de contato)
 
+<<<<<<< HEAD
 ## Estrutura
 
 ```
@@ -47,6 +48,8 @@ npm run build
 
 O site e publicado automaticamente via GitHub Pages a partir da branch `master`.
 
+=======
+>>>>>>> origin/master
 ## Contato
 
 - Email: edufms@gmail.com
