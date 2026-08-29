@@ -13,11 +13,9 @@ Portfolio profissional de Eduardo Machado, Analista de Dados.
 ```
 ├── index.html              # Pagina principal do portfolio
 ├── bingo.html              # Jogo de Bingo (projeto auxiliar)
-├── equipamentos.html       # Cadastro de equipamentos RPG (projeto auxiliar)
 ├── css/
 │   ├── style.css           # Estilos customizados do portfolio
-│   ├── bingo.css           # Estilos do jogo de Bingo
-│   └── equipamentos.css    # Estilos do cadastro de equipamentos
+│   └── bingo.css           # Estilos do jogo de Bingo
 ├── scripts/
 │   ├── main.js             # JavaScript principal do portfolio
 │   └── bingo.js            # JavaScript do jogo de Bingo
