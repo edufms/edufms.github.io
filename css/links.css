@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-tech {
+  background-color: #0f172a;
+}
+
+@layer components {
+  .container {
+    @max-width(100%);
+    @padding(0 1rem);
+    @margin-left(auto);
+    @margin-right(auto);
+  }
+
+  .btn-social {
+    @display(flex);
+    @align-items(center);
+    @justify-center;
+    @gap-3;
+    @px-6;
+    @py-3;
+    @rounded-lg;
+    @bg-blue-600/20;
+    @hover\:bg-blue-600/30;
+    @text-white;
+    @text-lg;
+    @transition-colors;
+    @hover\:text-blue-300;
+  }
+}
