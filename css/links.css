@@ -1,32 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .bg-tech {
   background-color: #0f172a;
 }
 
-@layer components {
-  .container {
-    @max-width(100%);
-    @padding(0 1rem);
-    @margin-left(auto);
-    @margin-right(auto);
-  }
+.container {
+  max-width: 100%;
+  padding: 0 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .btn-social {
-    @display(flex);
-    @align-items(center);
-    @justify-center;
-    @gap-3;
-    @px-6;
-    @py-3;
-    @rounded-lg;
-    @bg-blue-600/20;
-    @hover\:bg-blue-600/30;
-    @text-white;
-    @text-lg;
-    @transition-colors;
-    @hover\:text-blue-300;
-  }
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-center: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: rgba(96, 165, 250, 0.1);
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background-color: rgba(96, 165, 250, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.15);
+}
+
+.social-link i {
+  font-size: 1.5rem;
 }
